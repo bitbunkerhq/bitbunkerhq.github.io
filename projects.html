@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Proyectos – BitBunker HQ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #111;
+      color: #eee;
+    }
+    header {
+      background-color: #1e1e1e;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #333;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+      color: #00d8ff;
+    }
+    nav a {
+      color: #ccc;
+      text-decoration: none;
+      margin: 0 15px;
+    }
+    nav a:hover {
+      color: #00d8ff;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+    .project {
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    .project h2 {
+      color: #00d8ff;
+    }
+    .project p {
+      margin-bottom: 10px;
+    }
+    .project a {
+      color: #00d8ff;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Proyectos – BitBunker HQ</h1>
+    <nav>
+      <a href="index.html">Inicio</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="project">
+      <h2>Dashboard Financiero – Clínica Demo</h2>
+      <p>Power BI con métricas de ingresos, asistencia y rentabilidad. Incluye análisis por especialidad y visualización mensual/anual.</p>
+      <p><a href="#">Ver demo o captura</a></p>
+    </div>
+
+    <div class="project">
+      <h2>Métricas PostgreSQL en Grafana</h2>
+      <p>Panel real montado con Prometheus + Node Exporter en servidor Linux. Visualiza CPU, memoria, consultas y latencia en vivo.</p>
+      <p><a href="#">Ver configuración</a></p>
+    </div>
+
+    <div class="project">
+      <h2>Script SQL – Análisis de churn en clientes</h2>
+      <p>Query optimizada en PostgreSQL para detectar pérdida de clientes en servicios mensuales. Incluye índice, `EXPLAIN`, y refactor PL/pgSQL.</p>
+      <p><a href="#">Ver código</a></p>
+    </div>
+  </div>
+
+</body>
+</html>
