@@ -1,85 +1,265 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>BitBunker HQ – Fede</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BitBunker HQ – Portfolio de Fede Valenti</title>
+  <meta name="description" content="DBA Junior & Data Analyst. PostgreSQL, SQL, Grafana, Prometheus, Power BI. Construyendo bases de datos orientadas a rendimiento, monitoreo e insights." />
+  <meta property="og:title" content="BitBunker HQ – Portfolio de Fede Valenti" />
+  <meta property="og:description" content="PostgreSQL • SQL • Grafana • Prometheus • Power BI" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/og-bitbunker.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tailwind via CDN (ideal para prototipo) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bunker: {
+              50: '#f7f8fb',
+              100: '#eef1f7',
+              200: '#d9e0ee',
+              300: '#b9c6de',
+              400: '#7f9ac2',
+              500: '#4b6fa8',
+              600: '#31558f',
+              700: '#294673',
+              800: '#233a5c',
+              900: '#1b2c44',
+              950: '#121d2c',
+            },
+            accent: '#22d3ee'
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #111;
-      color: #eee;
-    }
-    header {
-      background-color: #1e1e1e;
-      padding: 20px;
-      text-align: center;
-      border-bottom: 1px solid #333;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-      color: #00d8ff;
-    }
-    nav {
-      margin-top: 10px;
-    }
-    nav a {
-      color: #ccc;
-      text-decoration: none;
-      margin: 0 15px;
-      font-size: 16px;
-    }
-    nav a:hover {
-      color: #00d8ff;
-    }
-    main {
-      padding: 40px 20px;
-      max-width: 800px;
-      margin: auto;
-      line-height: 1.6;
-    }
-    h2 {
-      color: #00d8ff;
-    }
-    footer {
-      text-align: center;
-      font-size: 14px;
-      color: #666;
-      margin-top: 40px;
-      padding-bottom: 20px;
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    /* Sutil fondo animado */
+    .bg-grid {
+      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0);
+      background-size: 24px 24px;
     }
   </style>
 </head>
-<body>
-
-  <header>
-    <h1>BitBunker HQ</h1>
-    <nav>
-      <a href="index.html">Inicio</a>
-      <a href="projects.html">Proyectos</a>
-      <a href="#">Sobre mí</a>
-      <a href="#">Contacto</a>
-    </nav>
+<body class="min-h-screen bg-bunker-950 text-white">
+  <!-- Header -->
+  <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-bunker-950/70 bg-bunker-950/60 border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2 group">
+        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-accent/20 text-accent font-black">BB</span>
+        <span class="font-semibold tracking-tight group-hover:text-accent transition">BitBunker HQ</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm text-white/80">
+        <a class="hover:text-white" href="#proyectos">Proyectos</a>
+        <a class="hover:text-white" href="#progreso">Progreso</a>
+        <a class="hover:text-white" href="#sobre-mi">Sobre mí</a>
+        <a class="hover:text-white" href="#contacto">Contacto</a>
+        <a class="ml-2 inline-flex items-center gap-2 rounded-lg border border-white/15 px-3 py-1.5 hover:bg-white/5 transition" href="https://www.linkedin.com/in/fedevalenti" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <h2>Hola, soy Fede 👋</h2>
-    <p>Soy <strong>End-to-End Data Analyst</strong>: combino análisis de datos, diseño de dashboards e infraestructura de bases de datos.</p>
-    <p>En este búnker digital estoy construyendo herramientas, automatizaciones y visualizaciones para dominar el stack completo de datos.</p>
-    <p>Pronto vas a encontrar acá:</p>
-    <ul>
-      <li>📊 Dashboards interactivos en Power BI y Google Sheets</li>
-      <li>⚙️ Métricas en vivo desde PostgreSQL + Grafana + Prometheus</li>
-      <li>💡 Casos reales con clínicas e inmobiliarias</li>
-    </ul>
-    <p>Este sitio está en desarrollo. ¡Gracias por pasar!</p>
-  </main>
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-bunker-900/0 via-bunker-900/20 to-bunker-950"></div>
+    <div class="absolute inset-0 bg-grid"></div>
+    <div class="max-w-6xl mx-auto px-4 pt-16 pb-20 md:pt-24 md:pb-28 relative">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h1 class="text-3xl md:text-5xl font-extrabold leading-tight">
+            DBA Junior & Analista de Datos
+            <span class="block text-white/70 mt-2 text-xl md:text-2xl font-semibold">PostgreSQL • SQL • Grafana • Power BI • AWS</span>
+          </h1>
+          <p class="mt-5 text-white/80 max-w-xl">
+            Construyo bases de datos orientadas a rendimiento, monitoreo e insights. Actualmente desarrollo <span class="text-accent font-semibold">GreenhouseMarket</span>, un entorno realista de PostgreSQL con tuning (EXPLAIN ANALYZE), índices estratégicos, vistas BI y métricas en vivo con Prometheus + Grafana.
+          </p>
+          <div class="mt-7 flex flex-wrap gap-3">
+            <a href="#proyectos" class="px-5 py-2.5 rounded-lg bg-accent text-bunker-950 font-semibold hover:brightness-110 transition">Ver proyectos</a>
+            <a href="#contacto" class="px-5 py-2.5 rounded-lg border border-white/15 hover:bg-white/5 transition">Contactar</a>
+          </div>
+          <div class="mt-6 flex flex-wrap items-center gap-3 text-xs text-white/70">
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">PostgreSQL</span>
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Grafana</span>
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Prometheus</span>
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Power BI</span>
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">AWS</span>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="aspect-[4/3] rounded-2xl bg-bunker-900/60 border border-white/10 shadow-xl p-6">
+            <!-- Mockup paneles -->
+            <div class="grid grid-cols-3 gap-3 h-full">
+              <div class="col-span-2 bg-bunker-800/60 rounded-lg border border-white/10 p-3">
+                <div class="h-4 w-24 bg-white/20 rounded mb-3"></div>
+                <div class="grid grid-cols-4 gap-2">
+                  <div class="h-24 bg-bunker-700/60 rounded"></div>
+                  <div class="h-24 bg-bunker-700/60 rounded"></div>
+                  <div class="h-24 bg-bunker-700/60 rounded"></div>
+                  <div class="h-24 bg-bunker-700/60 rounded"></div>
+                </div>
+                <div class="mt-3 h-24 bg-bunker-700/60 rounded"></div>
+              </div>
+              <div class="bg-bunker-800/60 rounded-lg border border-white/10 p-3">
+                <div class="h-4 w-20 bg-white/20 rounded mb-3"></div>
+                <div class="h-36 bg-bunker-700/60 rounded"></div>
+                <div class="mt-3 h-10 bg-bunker-700/60 rounded"></div>
+              </div>
+            </div>
+          </div>
+          <p class="text-xs text-white/50 mt-2">Mockup ilustrativo de dashboards y métricas (preview).</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <footer>
-    © 2025 BitBunker HQ · Desarrollado por Fede
+  <!-- Proyectos -->
+  <section id="proyectos" class="max-w-6xl mx-auto px-4 py-16 md:py-20">
+    <div class="flex items-end justify-between flex-wrap gap-4">
+      <h2 class="text-2xl md:text-3xl font-bold">Proyectos</h2>
+      <span class="text-white/60 text-sm">Más detalles muy pronto</span>
+    </div>
+
+    <div class="mt-8 grid md:grid-cols-3 gap-6">
+      <!-- Card 1 -->
+      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6 hover:bg-bunker-900 transition">
+        <div class="text-sm text-accent font-semibold">Base de datos</div>
+        <h3 class="mt-1 text-xl font-semibold">GreenhouseMarket – PostgreSQL</h3>
+        <p class="mt-2 text-white/80">Modelo relacional completo con datos realistas, vistas BI y enfoque en rendimiento.</p>
+        <ul class="mt-4 text-sm space-y-1 text-white/75 list-disc list-inside">
+          <li>Optimización con <code>EXPLAIN ANALYZE</code></li>
+          <li>Índices compuestos estratégicos</li>
+          <li>Vistas SQL BI-ready</li>
+        </ul>
+        <div class="mt-4 text-xs text-white/60">Caso publicado: <span class="italic">próximamente</span></div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6 hover:bg-bunker-900 transition">
+        <div class="text-sm text-accent font-semibold">Monitoreo</div>
+        <h3 class="mt-1 text-xl font-semibold">Stack de métricas – Prometheus + Grafana</h3>
+        <p class="mt-2 text-white/80">Paneles con latencia, QPS, tipos de escaneo, bloqueos y estado de autovacuum.</p>
+        <ul class="mt-4 text-sm space-y-1 text-white/75 list-disc list-inside">
+          <li>postgres_exporter</li>
+          <li>Métricas de rendimiento y alertas</li>
+          <li>Dashboards limpios y accionables</li>
+        </ul>
+        <div class="mt-4 text-xs text-white/60">Capturas: <span class="italic">próximamente</span></div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6 hover:bg-bunker-900 transition">
+        <div class="text-sm text-accent font-semibold">Analítica</div>
+        <h3 class="mt-1 text-xl font-semibold">Dashboards – Power BI</h3>
+        <p class="mt-2 text-white/80">KPIs de ventas, productos, márgenes y estacionalidad conectados a la base.</p>
+        <ul class="mt-4 text-sm space-y-1 text-white/75 list-disc list-inside">
+          <li>Segmentación por tienda y campañas</li>
+          <li>Insights accionables “BI-ready”</li>
+          <li>Publicación web (coming soon)</li>
+        </ul>
+        <div class="mt-4 text-xs text-white/60">Demo: <span class="italic">próximamente</span></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Progreso -->
+  <section id="progreso" class="bg-bunker-900/40 border-y border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-14">
+      <h2 class="text-2xl md:text-3xl font-bold">Progreso del proyecto</h2>
+      <p class="mt-2 text-white/80 max-w-2xl">BitBunkerHQ se publica por etapas. Compartiré avances técnicos y casos de tuning reales. Estos son los hitos actuales:</p>
+
+      <div class="mt-8 grid md:grid-cols-2 gap-6">
+        <div class="space-y-5">
+          <div>
+            <div class="flex justify-between text-sm text-white/70">
+              <span>Modelo y datos (PostgreSQL)</span><span>70%</span>
+            </div>
+            <div class="h-2 bg-white/10 rounded-full mt-1">
+              <div class="h-2 bg-accent rounded-full w-[70%]"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-sm text-white/70">
+              <span>Monitoreo Prom/Grafana</span><span>60%</span>
+            </div>
+            <div class="h-2 bg-white/10 rounded-full mt-1">
+              <div class="h-2 bg-accent rounded-full w-[60%]"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-sm text-white/70">
+              <span>Vistas BI & Power BI</span><span>40%</span>
+            </div>
+            <div class="h-2 bg-white/10 rounded-full mt-1">
+              <div class="h-2 bg-accent rounded-full w-[40%]"></div>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6">
+          <h3 class="font-semibold">Stack</h3>
+          <div class="mt-3 flex flex-wrap gap-2 text-sm">
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">PostgreSQL</span>
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">SQL</span>
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Prometheus</span>
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Grafana</span>
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Power BI</span>
+            <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">AWS</span>
+          </div>
+          <p class="mt-4 text-white/80 text-sm">Objetivo: demostrar dominio end‑to‑end, desde administración y tuning de bases hasta analítica y visualización.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sobre mí -->
+  <section id="sobre-mi" class="max-w-6xl mx-auto px-4 py-16 md:py-20">
+    <div class="grid md:grid-cols-5 gap-8 items-start">
+      <div class="md:col-span-3">
+        <h2 class="text-2xl md:text-3xl font-bold">Sobre mí</h2>
+        <p class="mt-3 text-white/80">Soy Fede Valenti. DBA Junior y Analista de Datos en formación continua. Me interesa el rendimiento de las bases y cómo se traducen en valor para el negocio. Vengo del mundo del soporte técnico e infraestructura (AWS), lo que me da una visión completa del sistema.</p>
+        <p class="mt-3 text-white/80">Trabajo con foco en buenas prácticas, documentación clara y aprendizaje aplicado. En BitBunkerHQ comparto el camino: qué hago, por qué lo hago y cómo lo mido.</p>
+      </div>
+      <aside class="md:col-span-2 rounded-2xl border border-white/10 bg-bunker-900/60 p-6">
+        <h3 class="font-semibold">Lo que estoy practicando</h3>
+        <ul class="mt-3 text-sm text-white/80 space-y-2 list-disc list-inside">
+          <li>EXPLAIN ANALYZE y lectura de planes</li>
+          <li>Índices compuestos y parciales</li>
+          <li>Métricas clave: latencia, locks, QPS</li>
+          <li>Dashboards con historias de negocio</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="bg-bunker-900/40 border-y border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-14">
+      <h2 class="text-2xl md:text-3xl font-bold">Contacto</h2>
+      <p class="mt-2 text-white/80">¿Te interesa lo que hago o querés ver avances antes? Hablemos.</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="mailto:contact@bitbunkerhq.com" class="px-5 py-2.5 rounded-lg bg-accent text-bunker-950 font-semibold hover:brightness-110 transition">Enviar email</a>
+        <a href="https://www.linkedin.com/in/fedevalenti" target="_blank" rel="noopener" class="px-5 py-2.5 rounded-lg border border-white/15 hover:bg-white/5 transition">LinkedIn</a>
+        <a href="https://github.com/bitbunkerhub" target="_blank" rel="noopener" class="px-5 py-2.5 rounded-lg border border-white/15 hover:bg-white/5 transition">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-sm text-white/60">
+    <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-2">
+      <p>© <span id="year"></span> BitBunker HQ – Fede Valenti</p>
+      <p class="opacity-80">Hecho con 💙, PostgreSQL y mucha curiosidad.</p>
+    </div>
   </footer>
 
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
