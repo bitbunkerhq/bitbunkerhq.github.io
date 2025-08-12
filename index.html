@@ -9,6 +9,11 @@
   <meta property="og:description" content="PostgreSQL • SQL • Grafana • Prometheus • Power BI" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="/og-bitbunker.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/assets/favicon.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -119,142 +124,57 @@
     </div>
   </section>
 
-  <!-- Proyectos -->
+  <!-- Proyectos (limpio, sin el grid 2×2) -->
   <section id="proyectos" class="max-w-6xl mx-auto px-4 py-16 md:py-20">
     <div class="flex items-end justify-between flex-wrap gap-4">
       <h2 class="text-2xl md:text-3xl font-bold">Proyectos</h2>
       <span class="text-white/60 text-sm">Más detalles muy pronto</span>
     </div>
-<!-- ============================ -->
-<!-- Greenhouse Monitoring (ES/EN) -->
-<!-- ============================ -->
-<section id="greenhouse-monitoring" class="section container" style="margin: 4rem auto; max-width: 1200px;">
-  <header style="margin-bottom: 1rem;">
-    <h2 style="margin:0 0 .25rem 0; font-size: clamp(1.4rem, 2vw, 2rem);">Monitoreo PostgreSQL – GreenhouseMarket</h2>
-    <p style="margin:0; opacity:.85;">
-      <span lang="es">Paneles reales en Grafana/Prometheus durante una prueba controlada de carga (pgbench).</span>
-      <span aria-hidden="true"> · </span>
-      <span lang="en">Real Grafana/Prometheus panels during a controlled load test (pgbench).</span>
+
+    <p class="mt-3 text-white/80 max-w-3xl">
+      GreenhouseMarket es un proyecto end‑to‑end: una base PostgreSQL realista para practicar DBA (monitoreo, performance, indexación)
+      y, sobre esa base, construir análisis y dashboards de BI. Elegí una sección para ver los detalles:
     </p>
-  </header>
-
-  <!-- Grid 2x2 responsive -->
-  <div class="ghm-grid" style="
-       display: grid;
-       grid-template-columns: repeat(2, 1fr);
-       gap: 14px;
-       align-items: start;
-     ">
-    <!-- Card 1 -->
-    <figure class="ghm-card" style="border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 10px; background: rgba(255,255,255,.03);">
-      <a href="/assets/greenhouse-monitoring/01-before-kpis.png" target="_blank" rel="noopener">
-        <img src="/assets/greenhouse-monitoring/01-before-kpis.png" alt="KPIs base antes de la prueba: latencia, throughput y conexiones en reposo" loading="lazy" style="width:100%; height:auto; border-radius: 8px;" />
-      </a>
-      <figcaption style="font-size:.95rem; line-height:1.45; margin-top:.6rem; opacity:.9;">
-        <strong lang="es">Antes – KPIs base.</strong> <span lang="es">Sistema en reposo: conexiones bajas, TPS≈0, latencias mínimas.</span><br>
-        <strong lang="en">Before – Baseline KPIs.</strong> <span lang="en">Idle system: low connections, TPS≈0, minimal latency.</span>
-      </figcaption>
-    </figure>
-
-    <!-- Card 2 -->
-    <figure class="ghm-card" style="border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 10px; background: rgba(255,255,255,.03);">
-      <a href="/assets/greenhouse-monitoring/02-during-connections-tps-rows.png" target="_blank" rel="noopener">
-        <img src="/assets/greenhouse-monitoring/02-during-connections-tps-rows.png" alt="Durante la prueba: aumento de conexiones, TPS y filas procesadas por segundo" loading="lazy" style="width:100%; height:auto; border-radius: 8px;" />
-      </a>
-      <figcaption style="font-size:.95rem; line-height:1.45; margin-top:.6rem; opacity:.9;">
-        <strong lang="es">Durante – Conexiones / TPS / Filas.</strong> <span lang="es">Aumentan conexiones activas y TPS; se observan lecturas/escrituras sostenidas.</span><br>
-        <strong lang="en">During – Connections / TPS / Rows.</strong> <span lang="en">Active connections and TPS rise; sustained reads/writes observed.</span>
-      </figcaption>
-    </figure>
-
-    <!-- Card 3 -->
-    <figure class="ghm-card" style="border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 10px; background: rgba(255,255,255,.03);">
-      <a href="/assets/greenhouse-monitoring/03-peak-health.png" target="_blank" rel="noopener">
-        <img src="/assets/greenhouse-monitoring/03-peak-health.png" alt="Pico de carga con métricas de salud: cache-hit, locks, autovacuum, latencias" loading="lazy" style="width:100%; height:auto; border-radius: 8px;" />
-      </a>
-      <figcaption style="font-size:.95rem; line-height:1.45; margin-top:.6rem; opacity:.9;">
-        <strong lang="es">Pico – Salud del sistema.</strong> <span lang="es">Cache hit estable, locks bajo control, latencias monitoreadas.</span><br>
-        <strong lang="en">Peak – System Health.</strong> <span lang="en">Stable cache hit, locks under control, latencies tracked.</span>
-      </figcaption>
-    </figure>
-
-    <!-- Card 4 -->
-    <figure class="ghm-card" style="border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 10px; background: rgba(255,255,255,.03);">
-      <a href="/assets/greenhouse-monitoring/04-after-kpis.png" target="_blank" rel="noopener">
-        <img src="/assets/greenhouse-monitoring/04-after-kpis.png" alt="Después de la prueba: KPIs vuelven a la línea base, sin anomalías" loading="lazy" style="width:100%; height:auto; border-radius: 8px;" />
-      </a>
-      <figcaption style="font-size:.95rem; line-height:1.45; margin-top:.6rem; opacity:.9;">
-        <strong lang="es">Después – KPIs normalizados.</strong> <span lang="es">Recuperación a niveles base; no se detectan anomalías.</span><br>
-        <strong lang="en">After – KPIs normalized.</strong> <span lang="en">Return to baseline; no anomalies detected.</span>
-      </figcaption>
-    </figure>
-  </div>
-
-  <!-- Technical notes (pgbench) -->
-  <div class="ghm-tech" style="margin-top: 1.5rem; border-left: 4px solid rgba(255,255,255,.2); padding: .75rem 1rem; background: rgba(255,255,255,.03); border-radius: 8px;">
-    <h3 style="margin:.2rem 0 .4rem 0; font-size: clamp(1.1rem, 1.6vw, 1.35rem);">Detalles técnicos / Technical notes</h3>
-    <ul style="margin:.3rem 0; padding-left: 1.1rem;">
-      <li><span lang="es">Herramienta:</span> <span lang="en">Tool:</span> <code>pgbench</code> (workload TPC‑B-like builtin)</li>
-      <li><span lang="es">Inicialización:</span> <span lang="en">Init:</span> <code>pgbench -i -s 10</code> <span style="opacity:.8;">(scale 10 como ejemplo)</span></li>
-      <li><span lang="es">Carga típica:</span> <span lang="en">Typical run:</span> <code>pgbench -c 50 -j 8 -T 200 -P 5</code></li>
-      <li><span lang="es">Monitoreo:</span> <span lang="en">Monitoring:</span> Grafana + Prometheus + postgres_exporter</li>
-      <li><span lang="es">Métricas clave:</span> <span lang="en">Key metrics:</span> Connections, TPS, Tuples, Latency, Cache Hit, Locks, Autovacuum, Checkpoints</li>
-      <li><span lang="es">Contexto:</span> <span lang="en">Context:</span> <code>greenhousemarket</code> DB en host Linux (demo)</li>
-    </ul>
-    <p style="margin:.4rem 0 0 0; opacity:.85;">
-      <span lang="es">Los valores exactos de escala, clientes e hilos pueden variar según la prueba.</span>
-      <span aria-hidden="true"> · </span>
-      <span lang="en">Exact scale, clients and threads may vary across runs.</span>
-    </p>
-  </div>
-</section>
-
-<!-- Responsive fallback: en pantallas estrechas, 1 por fila -->
-<style>
-  @media (max-width: 820px){
-    #greenhouse-monitoring .ghm-grid { grid-template-columns: 1fr !important; }
-  }
-</style>
 
     <div class="mt-8 grid md:grid-cols-3 gap-6">
       <!-- Card 1 -->
-      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6 hover:bg-bunker-900 transition">
-        <div class="text-sm text-accent font-semibold">Base de datos</div>
-        <h3 class="mt-1 text-xl font-semibold">GreenhouseMarket – PostgreSQL</h3>
-        <p class="mt-2 text-white/80">Modelo relacional completo con datos realistas, vistas BI y enfoque en rendimiento.</p>
-        <ul class="mt-4 text-sm space-y-1 text-white/75 list-disc list-inside">
-          <li>Optimización con <code>EXPLAIN ANALYZE</code></li>
-          <li>Índices compuestos estratégicos</li>
-          <li>Vistas SQL BI-ready</li>
-        </ul>
-        <div class="mt-4 text-xs text-white/60">Caso publicado: <span class="italic">próximamente</span></div>
-      </article>
-
-      <!-- Card 2 -->
-      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6 hover:bg-bunker-900 transition">
-        <div class="text-sm text-accent font-semibold">Monitoreo</div>
-        <h3 class="mt-1 text-xl font-semibold">Stack de métricas – Prometheus + Grafana</h3>
-        <p class="mt-2 text-white/80">Paneles con latencia, QPS, tipos de escaneo, bloqueos y estado de autovacuum.</p>
+      <a href="/monitoring.html" class="block rounded-2xl border border-white/10 bg-bunker-900/60 p-6 hover:bg-bunker-900 transition">
+        <div class="text-sm text-accent font-semibold">DBA · Monitoreo</div>
+        <h3 class="mt-1 text-xl font-semibold">Prometheus + Grafana</h3>
+        <p class="mt-2 text-white/80">Paneles con latencia, TPS/QPS, locks y estado de autovacuum. Incluye prueba controlada con pgbench.</p>
         <ul class="mt-4 text-sm space-y-1 text-white/75 list-disc list-inside">
           <li>postgres_exporter</li>
-          <li>Métricas de rendimiento y alertas</li>
-          <li>Dashboards limpios y accionables</li>
+          <li>KPIs y picos de carga</li>
+          <li>Capturas reales 2×2</li>
         </ul>
-        <div class="mt-4 text-xs text-white/60">Capturas: <span class="italic">próximamente</span></div>
-      </article>
+        <div class="mt-4 text-xs text-white/60">Ver capturas →</div>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="/indexing.html" class="block rounded-2xl border border-white/10 bg-bunker-900/60 p-6 hover:bg-bunker-900 transition">
+        <div class="text-sm text-accent font-semibold">Performance</div>
+        <h3 class="mt-1 text-xl font-semibold">Indexación & Tuning</h3>
+        <p class="mt-2 text-white/80">EXPLAIN ANALYZE, índices simples/compuestos y parciales, bitmap scans y casos reales.</p>
+        <ul class="mt-4 text-sm space-y-1 text-white/75 list-disc list-inside">
+          <li>Lectura de planes</li>
+          <li>Comparativas Seq vs Index Scan</li>
+          <li>Optimización de queries</li>
+        </ul>
+        <div class="mt-4 text-xs text-white/60">Abrir sección →</div>
+      </a>
 
       <!-- Card 3 -->
-      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6 hover:bg-bunker-900 transition">
+      <a href="/bi.html" class="block rounded-2xl border border-white/10 bg-bunker-900/60 p-6 hover:bg-bunker-900 transition">
         <div class="text-sm text-accent font-semibold">Analítica</div>
-        <h3 class="mt-1 text-xl font-semibold">Dashboards – Power BI</h3>
+        <h3 class="mt-1 text-xl font-semibold">BI · Dashboards & Analytics</h3>
         <p class="mt-2 text-white/80">KPIs de ventas, productos, márgenes y estacionalidad conectados a la base.</p>
         <ul class="mt-4 text-sm space-y-1 text-white/75 list-disc list-inside">
           <li>Segmentación por tienda y campañas</li>
-          <li>Insights accionables “BI-ready”</li>
+          <li>Insights “BI‑ready”</li>
           <li>Publicación web (coming soon)</li>
         </ul>
-        <div class="mt-4 text-xs text-white/60">Demo: <span class="italic">próximamente</span></div>
-      </article>
+        <div class="mt-4 text-xs text-white/60">Ver BI →</div>
+      </a>
     </div>
   </section>
 

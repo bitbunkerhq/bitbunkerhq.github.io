@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Monitoring – GreenhouseMarket</title>
+  <meta name="description" content="Grafana/Prometheus monitoring for the GreenhouseMarket PostgreSQL project" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/assets/favicon.png">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen bg-bunker-950 text-white">
+  <main class="max-w-6xl mx-auto px-4 py-10 md:py-14">
+    <a href="/" class="inline-block text-white/70 hover:text-white mb-6">← Home</a>
+
+    <h1 class="text-2xl md:text-3xl font-bold">Monitoreo PostgreSQL – GreenhouseMarket</h1>
+    <p class="mt-2 text-white/80">
+      <span lang="es">Paneles reales en Grafana/Prometheus durante una prueba controlada de carga (pgbench).</span>
+      <span aria-hidden="true"> · </span>
+      <span lang="en">Real Grafana/Prometheus panels during a controlled load test (pgbench).</span>
+    </p>
+
+    <!-- Grid 2x2 -->
+    <div class="mt-8 grid md:grid-cols-2 gap-4">
+      <!-- 1 -->
+      <figure class="rounded-xl border border-white/10 bg-bunker-900/60 p-3">
+        <a href="/assets/greenhouse-monitoring/01-before-kpis.png" target="_blank" rel="noopener">
+          <img class="w-full h-auto rounded-lg" loading="lazy" src="/assets/greenhouse-monitoring/01-before-kpis.png" alt="KPIs base antes de la prueba: latencia, throughput y conexiones en reposo">
+        </a>
+        <figcaption class="text-sm text-white/80 mt-2">
+          <strong lang="es">Antes – KPIs base.</strong> <span lang="es">Sistema en reposo: conexiones bajas, TPS≈0, latencias mínimas.</span><br>
+          <strong lang="en">Before – Baseline KPIs.</strong> <span lang="en">Idle system: low connections, TPS≈0, minimal latency.</span>
+        </figcaption>
+      </figure>
+      <!-- 2 -->
+      <figure class="rounded-xl border border-white/10 bg-bunker-900/60 p-3">
+        <a href="/assets/greenhouse-monitoring/02-during-connections-tps-rows.png" target="_blank" rel="noopener">
+          <img class="w-full h-auto rounded-lg" loading="lazy" src="/assets/greenhouse-monitoring/02-during-connections-tps-rows.png" alt="Durante la prueba: aumento de conexiones, TPS y filas procesadas por segundo">
+        </a>
+        <figcaption class="text-sm text-white/80 mt-2">
+          <strong lang="es">Durante – Conexiones / TPS / Filas.</strong> <span lang="es">Aumentan conexiones activas y TPS; se observan lecturas/escrituras sostenidas.</span><br>
+          <strong lang="en">During – Connections / TPS / Rows.</strong> <span lang="en">Active connections and TPS rise; sustained reads/writes observed.</span>
+        </figcaption>
+      </figure>
+      <!-- 3 -->
+      <figure class="rounded-xl border border-white/10 bg-bunker-900/60 p-3">
+        <a href="/assets/greenhouse-monitoring/03-peak-health.png" target="_blank" rel="noopener">
+          <img class="w-full h-auto rounded-lg" loading="lazy" src="/assets/greenhouse-monitoring/03-peak-health.png" alt="Pico de carga con métricas de salud: cache-hit, locks, autovacuum, latencias">
+        </a>
+        <figcaption class="text-sm text-white/80 mt-2">
+          <strong lang="es">Pico – Salud del sistema.</strong> <span lang="es">Cache hit estable, locks bajo control, latencias monitoreadas.</span><br>
+          <strong lang="en">Peak – System Health.</strong> <span lang="en">Stable cache hit, locks under control, latencies tracked.</span>
+        </figcaption>
+      </figure>
+      <!-- 4 -->
+      <figure class="rounded-xl border border-white/10 bg-bunker-900/60 p-3">
+        <a href="/assets/greenhouse-monitoring/04-after-kpis.png" target="_blank" rel="noopener">
+          <img class="w-full h-auto rounded-lg" loading="lazy" src="/assets/greenhouse-monitoring/04-after-kpis.png" alt="Después de la prueba: KPIs vuelven a la línea base, sin anomalías">
+        </a>
+        <figcaption class="text-sm text-white/80 mt-2">
+          <strong lang="es">Después – KPIs normalizados.</strong> <span lang="es">Recuperación a niveles base; no se detectan anomalías.</span><br>
+          <strong lang="en">After – KPIs normalized.</strong> <span lang="en">Return to baseline; no anomalies detected.</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- Notas técnicas -->
+    <div class="mt-8 rounded-xl border-l-4 border-white/20 bg-white/5 p-4">
+      <h3 class="text-lg font-semibold mb-1">Detalles técnicos / Technical notes</h3>
+      <ul class="list-disc list-inside text-white/80">
+        <li>Tool: <code>pgbench</code> (TPC‑B-like)</li>
+        <li>Init: <code>pgbench -i -s 10</code> (ejemplo)</li>
+        <li>Run: <code>pgbench -c 50 -j 8 -T 200 -P 5</code></li>
+        <li>Stack: Grafana + Prometheus + postgres_exporter</li>
+        <li>Key metrics: Connections, TPS, Tuples, Latency, Cache Hit, Locks, Autovacuum, Checkpoints</li>
+        <li>DB: <code>greenhousemarket</code> (demo)</li>
+      </ul>
+      <p class="text-white/70 mt-2 text-sm">Los valores exactos de escala, clientes e hilos pueden variar entre ejecuciones.</p>
+    </div>
+  </main>
+</body>
+</html>
