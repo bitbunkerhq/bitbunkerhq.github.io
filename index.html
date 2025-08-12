@@ -196,7 +196,7 @@
     <ul style="margin:.3rem 0; padding-left: 1.1rem;">
       <li><span lang="es">Herramienta:</span> <span lang="en">Tool:</span> <code>pgbench</code> (workload TPC‑B-like builtin)</li>
       <li><span lang="es">Inicialización:</span> <span lang="en">Init:</span> <code>pgbench -i -s 10</code> <span style="opacity:.8;">(scale 10 como ejemplo)</span></li>
-      <li><span lang="es">Carga típica:</span> <span lang="en">Typical run:</span> <code>pgbench -c 20 -j 4 -T 60 -P 5</code></li>
+      <li><span lang="es">Carga típica:</span> <span lang="en">Typical run:</span> <code>pgbench -c 50 -j 8 -T 200 -P 5</code></li>
       <li><span lang="es">Monitoreo:</span> <span lang="en">Monitoring:</span> Grafana + Prometheus + postgres_exporter</li>
       <li><span lang="es">Métricas clave:</span> <span lang="en">Key metrics:</span> Connections, TPS, Tuples, Latency, Cache Hit, Locks, Autovacuum, Checkpoints</li>
       <li><span lang="es">Contexto:</span> <span lang="en">Context:</span> <code>greenhousemarket</code> DB en host Linux (demo)</li>
