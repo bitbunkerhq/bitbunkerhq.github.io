@@ -1,90 +1,256 @@
+<!-- =============================
+BITBUNKERHQ – MONITORING OVERVIEW + EXPERIMENTS LIST + NOTAS
+Instrucciones rápidas:
+1) Copia el bloque <section id="monitoring"> en tu index.html donde quieras que aparezca la sección.
+2) Crea la carpeta /experiments/ y añade páginas por prueba usando la plantilla de más abajo.
+3) Coloca capturas en /images/YYYY-MM/<slug>/ y referencia los archivos en <img src="...">.
+4) Actualiza la lista "Todas las pruebas" (orden inverso, lo último primero).
+============================= -->
+
+<!-- ===== MONITORING OVERVIEW (coloca este bloque en index.html) ===== -->
+<section id="monitoring" class="monitoring-section">
+  <div class="container">
+    <h2>Monitoring en Acción</h2>
+    <p class="intro">
+      Observabilidad de <strong>PostgreSQL</strong> con <strong>Prometheus + Grafana</strong>. Aquí contamos la historia de la <em>última prueba relevante</em> (baseline → carga → resultados), y al final listamos todos los casos anteriores.
+    </p>
+
+    <!-- 1) ANTES -->
+    <div class="monitoring-block">
+      <h3>1. Situación inicial</h3>
+      <p>
+        Entorno estable y de baja actividad para establecer un baseline: conexiones mínimas, TPS plano y ausencia de deadlocks. Esto nos da un punto de comparación para los cambios.
+      </p>
+      <figure>
+        <img src="images/2025-08/loadtest-v1/01-baseline-kpis.png" alt="KPIs iniciales: conexiones, TPS, cache hit">
+        <figcaption>Baseline: métricas planas y cache hit &gt; 99%.</figcaption>
+      </figure>
+      <details>
+        <summary>Ver más gráficos de la etapa inicial</summary>
+        <figure>
+          <img src="images/2025-08/loadtest-v1/01a-connections.png" alt="Conexiones por segundo">
+          <figcaption>Conexiones por segundo: patrón en reposo.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/2025-08/loadtest-v1/01b-buffers.png" alt="Buffers y cache">
+          <figcaption>Lecturas desde disco mínimas; cache efectivo.</figcaption>
+        </figure>
+      </details>
+    </div>
+
+    <!-- 2) DURANTE -->
+    <div class="monitoring-block">
+      <h3>2. Pruebas de carga</h3>
+      <p>
+        Ejecutamos <strong>pgbench</strong> y consultas BI intensivas para simular concurrencia real. Observamos comportamiento bajo presión: latencias, locks, variaciones de TPS y cache hit.
+      </p>
+      <figure>
+        <img src="images/2025-08/loadtest-v1/02-during-tps.png" alt="TPS durante las pruebas">
+        <figcaption>El TPS sube al inicio y se estabiliza tras el warm-up.</figcaption>
+      </figure>
+      <details>
+        <summary>Ver más gráficos de la prueba</summary>
+        <figure>
+          <img src="images/2025-08/loadtest-v1/02a-latency.png" alt="Latencia">
+          <figcaption>Latencia p50/p95 y su relación con el número de clientes.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/2025-08/loadtest-v1/02b-locks.png" alt="Locks">
+          <figcaption>Locks controlados; sin eventos de deadlock.</figcaption>
+        </figure>
+      </details>
+    </div>
+
+    <!-- 3) DESPUÉS -->
+    <div class="monitoring-block">
+      <h3>3. Resultados y balance</h3>
+      <p>
+        Tras índices estratégicos y revisión con <em>EXPLAIN ANALYZE</em>, bajaron tiempos de respuesta y se mantuvo cache hit &gt; 99%. Se validó la ausencia de deadlocks bajo el perfil de carga ejecutado.
+      </p>
+      <figure>
+        <img src="images/2025-08/loadtest-v1/03-after-kpis.png" alt="KPIs después de optimizaciones">
+        <figcaption>KPIs tras ajustes: throughput estable y menor latencia.</figcaption>
+      </figure>
+      <details>
+        <summary>Ver comparativas y anomalías</summary>
+        <figure>
+          <img src="images/2025-08/loadtest-v1/03a-comparison.png" alt="Comparativa antes vs después">
+          <figcaption>Comparativa directa baseline vs. optimizado.</figcaption>
+        </figure>
+      </details>
+    </div>
+
+    <!-- LISTA DE TODOS LOS CASOS (orden inverso: lo más nuevo primero) -->
+    <section id="experiments" class="experiments-list">
+      <h3>Todas las pruebas</h3>
+      <ul>
+        <li><a href="/experiments/loadtest-v1.html">Load Test V1 (2025‑08‑12) — pgbench 32c/8j, 5m</a></li>
+        <li><a href="/experiments/bi-queries-v1.html">BI Queries V1 (2025‑08‑10) — Top productos/mes</a></li>
+        <!-- Añade nuevas pruebas aquí (siempre arriba) -->
+      </ul>
+    </section>
+  </div>
+</section>
+
+<style>
+  .monitoring-section { background:#0b1e3a; color:#e6edf3; padding:60px 20px; }
+  .monitoring-section .container { max-width:1100px; margin:0 auto; }
+  .monitoring-section h2 { font-size:2.2rem; margin-bottom:20px; border-bottom:2px solid rgba(255,255,255,0.1); padding-bottom:10px; }
+  .monitoring-section .intro { font-size:1.08rem; color:#b8c5d3; margin-bottom:36px; }
+  .monitoring-block { margin-bottom:50px; }
+  .monitoring-block h3 { font-size:1.35rem; color:#5ac8fa; margin-bottom:10px; }
+  .monitoring-block p { color:#c8d6e5; line-height:1.55; margin-bottom:16px; }
+  .monitoring-block figure { margin:0 0 12px 0; }
+  .monitoring-block img { width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.12); box-shadow:0 2px 10px rgba(0,0,0,0.35); }
+  .monitoring-block figcaption { font-size:.92rem; color:#a8b9c9; margin-top:6px; }
+  .experiments-list h3 { margin-top:40px; }
+  .experiments-list ul { list-style:none; padding:0; margin:14px 0 0 0; }
+  .experiments-list li { margin:8px 0; }
+  .experiments-list a { color:#e6edf3; text-decoration:underline; text-underline-offset:3px; }
+  .experiments-list a:hover { opacity:.9; }
+  details { margin-top:10px; border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:10px 12px; }
+  summary { cursor:pointer; color:#d9e3ee; }
+</style>
+
+
+<!-- ===== NOTAS COMENTADAS (inclúyelo en index.html, debajo del overview) ===== -->
+<section id="notas-monitoring" class="notes-section">
+  <div class="container">
+    <h3>Notas de diseño: cómo documentamos pruebas y por qué</h3>
+    <ol>
+      <li><strong>Historia clara en la portada (Overview):</strong> Siempre mostramos la última prueba con 3 momentos (Antes / Durante / Después). Evitamos scroll infinito y mantenemos foco.</li>
+      <li><strong>Profundidad sin ruido:</strong> Usamos <code>&lt;details&gt;</code> para gráficos extra y comparativas. Así el lector curioso puede abrir y explorar sin romper el flujo.</li>
+      <li><strong>Escalabilidad:</strong> Cada prueba nueva vive en su propia URL (<code>/experiments/&lt;slug&gt;.html</code>) y su carpeta de imágenes (<code>/images/YYYY-MM/&lt;slug&gt;/</code>). Esto facilita Git, enlaces y orden histórico.</li>
+      <li><strong>Orden inverso:</strong> En la lista “Todas las pruebas”, lo más nuevo va primero. Mantiene la relevancia al día y simplifica compartir novedades.</li>
+      <li><strong>Convenciones de nombres:</strong> Slug corto y descriptivo (ej.: <code>loadtest-v1</code>, <code>bi-queries-v1</code>). Imágenes numeradas con prefijo (<code>01-</code>, <code>02-</code>) y descripción breve.</li>
+      <li><strong>Reuso del formato en otras áreas:</strong> Esta misma estructura aplica a <em>Indexación</em> y a <em>BI</em> (Dashboard/KPIs por dominios: Clientes, Facturación, Devoluciones...). Cada dominio puede tener su Overview y sus casos.</li>
+      <li><strong>Publicación continua:</strong> Este esquema te permite subir avances graduales a LinkedIn (link a una prueba específica) sin agotar material. La portada siempre refleja lo último.</li>
+    </ol>
+
+    <!-- Checklist operativo para nuevas pruebas -->
+    <h4>Checklist para la próxima prueba</h4>
+    <ul>
+      <li>Crear slug (p.ej. <code>loadtest-v2</code>) y carpeta de imágenes: <code>/images/2025-09/loadtest-v2/</code>.</li>
+      <li>Copiar la plantilla <em>case study</em> a <code>/experiments/loadtest-v2.html</code> y completar: contexto, setup, ejecución, métricas, hallazgos, acciones.</li>
+      <li>Exportar 3–5 gráficos “hero” y el resto como extra dentro de <code>&lt;details&gt;</code>.</li>
+      <li>Actualizar la lista “Todas las pruebas” (poner el nuevo enlace arriba).</li>
+      <li>(Opcional) Actualizar el Overview para que la nueva prueba sea la destacada.</li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .notes-section { background:#0d1430; color:#e6edf3; padding:40px 20px; border-top:1px solid rgba(255,255,255,0.06); }
+  .notes-section .container { max-width:1100px; margin:0 auto; }
+  .notes-section h3 { margin-bottom:12px; }
+  .notes-section ol { margin-left:18px; }
+  .notes-section li { margin:8px 0; color:#c9d6e6; }
+  .notes-section h4 { margin-top:22px; color:#5ac8fa; }
+</style>
+
+
+<!-- ===== PLANTILLA – PÁGINA POR PRUEBA (guárdala como /experiments/<slug>.html) ===== -->
+<!-- Ejemplo: /experiments/loadtest-v1.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Monitoring – GreenhouseMarket</title>
-  <meta name="description" content="Grafana/Prometheus monitoring for the GreenhouseMarket PostgreSQL project" />
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="alternate icon" href="/assets/favicon.png">
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="alternate icon" href="/assets/favicon.png">
+  <title>Load Test V1 – BitBunkerHQ Experimentos</title>
+  <meta name="description" content="Prueba de carga con pgbench sobre GreenhouseMarket. Contexto, setup, ejecución, métricas y hallazgos.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    :root{ --bg:#0b0f14; --card:#101623; --text:#e6edf3; --muted:#9fb0c3; --accent:#5ac8fa; }
+    html,body{ background:var(--bg); color:var(--text); margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif; }
+    .wrap{ max-width:1100px; margin:0 auto; padding:28px 20px 64px; }
+    a{ color:var(--accent); }
+    header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+    header a{ text-decoration:none; }
+    .badge{ font-size:12px; letter-spacing:.08em; color:#c6d3e4; border:1px solid rgba(255,255,255,0.12); padding:6px 10px; border-radius:999px; }
+    h1{ font-size:clamp(26px,4.5vw,40px); margin:.2rem 0 .4rem; }
+    .meta{ color:var(--muted); margin-bottom:18px; }
+    .card{ background:var(--card); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:18px; margin:18px 0; }
+    h2{ font-size:1.35rem; margin:10px 0; color:#e8f4ff; }
+    p,li{ line-height:1.6; color:#cbd6e3; }
+    figure{ margin:16px 0; }
+    img{ width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 2px 10px rgba(0,0,0,0.35); }
+    figcaption{ color:#a8b9c9; font-size:.92rem; margin-top:6px; }
+    details{ margin-top:12px; border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:10px 12px; }
+    summary{ cursor:pointer; color:#d9e3ee; }
+    .back{ display:inline-block; margin-bottom:8px; }
   </style>
 </head>
-<body class="min-h-screen bg-bunker-950 text-white">
-  <main class="max-w-6xl mx-auto px-4 py-10 md:py-14">
-    <a href="/" class="inline-block text-white/70 hover:text-white mb-6">← Home</a>
+<body>
+  <div class="wrap">
+    <a class="back" href="/index.html#experiments">← Volver a todas las pruebas</a>
+    <header>
+      <span class="badge">Experimento</span>
+      <span></span>
+    </header>
+    <h1>Load Test V1 — 2025‑08‑12</h1>
+    <p class="meta">PostgreSQL 15 • GreenhouseMarket • pgbench <code>-c 32 -j 8 -T 300 -P 5</code> • Dataset: 15k órdenes, 35k líneas</p>
 
-    <h1 class="text-2xl md:text-3xl font-bold">Monitoreo PostgreSQL – GreenhouseMarket</h1>
-    <p class="mt-2 text-white/80">
-      <span lang="es">Paneles reales en Grafana/Prometheus durante una prueba controlada de carga (pgbench).</span>
-      <span aria-hidden="true"> · </span>
-      <span lang="en">Real Grafana/Prometheus panels during a controlled load test (pgbench).</span>
-    </p>
+    <section class="card">
+      <h2>Contexto & Hipótesis</h2>
+      <p>Establecer baseline de rendimiento y observar saturación de conexiones/TPS con <code>pgbench</code>. Validar estabilidad de cache hit y ausencia de deadlocks bajo carga.</p>
+    </section>
 
-    <!-- Grid 2x2 -->
-    <div class="mt-8 grid md:grid-cols-2 gap-4">
-      <!-- 1 -->
-      <figure class="rounded-xl border border-white/10 bg-bunker-900/60 p-3">
-        <a href="/assets/greenhouse-monitoring/01-before-kpis.png" target="_blank" rel="noopener">
-          <img class="w-full h-auto rounded-lg" loading="lazy" src="/assets/greenhouse-monitoring/01-before-kpis.png" alt="KPIs base antes de la prueba: latencia, throughput y conexiones en reposo">
-        </a>
-        <figcaption class="text-sm text-white/80 mt-2">
-          <strong lang="es">Antes – KPIs base.</strong> <span lang="es">Sistema en reposo: conexiones bajas, TPS≈0, latencias mínimas.</span><br>
-          <strong lang="en">Before – Baseline KPIs.</strong> <span lang="en">Idle system: low connections, TPS≈0, minimal latency.</span>
-        </figcaption>
-      </figure>
-      <!-- 2 -->
-      <figure class="rounded-xl border border-white/10 bg-bunker-900/60 p-3">
-        <a href="/assets/greenhouse-monitoring/02-during-connections-tps-rows.png" target="_blank" rel="noopener">
-          <img class="w-full h-auto rounded-lg" loading="lazy" src="/assets/greenhouse-monitoring/02-during-connections-tps-rows.png" alt="Durante la prueba: aumento de conexiones, TPS y filas procesadas por segundo">
-        </a>
-        <figcaption class="text-sm text-white/80 mt-2">
-          <strong lang="es">Durante – Conexiones / TPS / Filas.</strong> <span lang="es">Aumentan conexiones activas y TPS; se observan lecturas/escrituras sostenidas.</span><br>
-          <strong lang="en">During – Connections / TPS / Rows.</strong> <span lang="en">Active connections and TPS rise; sustained reads/writes observed.</span>
-        </figcaption>
-      </figure>
-      <!-- 3 -->
-      <figure class="rounded-xl border border-white/10 bg-bunker-900/60 p-3">
-        <a href="/assets/greenhouse-monitoring/03-peak-health.png" target="_blank" rel="noopener">
-          <img class="w-full h-auto rounded-lg" loading="lazy" src="/assets/greenhouse-monitoring/03-peak-health.png" alt="Pico de carga con métricas de salud: cache-hit, locks, autovacuum, latencias">
-        </a>
-        <figcaption class="text-sm text-white/80 mt-2">
-          <strong lang="es">Pico – Salud del sistema.</strong> <span lang="es">Cache hit estable, locks bajo control, latencias monitoreadas.</span><br>
-          <strong lang="en">Peak – System Health.</strong> <span lang="en">Stable cache hit, locks under control, latencies tracked.</span>
-        </figcaption>
-      </figure>
-      <!-- 4 -->
-      <figure class="rounded-xl border border-white/10 bg-bunker-900/60 p-3">
-        <a href="/assets/greenhouse-monitoring/04-after-kpis.png" target="_blank" rel="noopener">
-          <img class="w-full h-auto rounded-lg" loading="lazy" src="/assets/greenhouse-monitoring/04-after-kpis.png" alt="Después de la prueba: KPIs vuelven a la línea base, sin anomalías">
-        </a>
-        <figcaption class="text-sm text-white/80 mt-2">
-          <strong lang="es">Después – KPIs normalizados.</strong> <span lang="es">Recuperación a niveles base; no se detectan anomalías.</span><br>
-          <strong lang="en">After – KPIs normalized.</strong> <span lang="en">Return to baseline; no anomalies detected.</span>
-        </figcaption>
-      </figure>
-    </div>
-
-    <!-- Notas técnicas -->
-    <div class="mt-8 rounded-xl border-l-4 border-white/20 bg-white/5 p-4">
-      <h3 class="text-lg font-semibold mb-1">Detalles técnicos / Technical notes</h3>
-      <ul class="list-disc list-inside text-white/80">
-        <li>Tool: <code>pgbench</code> (TPC‑B-like)</li>
-        <li>Init: <code>pgbench -i -s 10</code> (ejemplo)</li>
-        <li>Run: <code>pgbench -c 50 -j 8 -T 200 -P 5</code></li>
-        <li>Stack: Grafana + Prometheus + postgres_exporter</li>
-        <li>Key metrics: Connections, TPS, Tuples, Latency, Cache Hit, Locks, Autovacuum, Checkpoints</li>
-        <li>DB: <code>greenhousemarket</code> (demo)</li>
+    <section class="card">
+      <h2>Setup</h2>
+      <ul>
+        <li>Hardware/VM: (completar)</li>
+        <li>PostgreSQL: versión, parámetros relevantes (p.ej. <code>max_connections</code>, <code>shared_buffers</code>).</li>
+        <li>Comando pgbench: <code>-c 32 -j 8 -T 300 -P 5</code>.</li>
+        <li>Dataset: GreenhouseMarket — 15k órdenes, 35k líneas de detalle.</li>
       </ul>
-      <p class="text-white/70 mt-2 text-sm">Los valores exactos de escala, clientes e hilos pueden variar entre ejecuciones.</p>
-    </div>
-  </main>
+    </section>
+
+    <section class="card">
+      <h2>Ejecución</h2>
+      <p>Descripción breve del procedimiento: inicio de prueba, warm‑up, observación de métricas en Grafana, toma de capturas.</p>
+    </section>
+
+    <section class="card">
+      <h2>Métricas clave</h2>
+      <figure>
+        <img src="/images/2025-08/loadtest-v1/02-during-tps.png" alt="TPS durante la prueba">
+        <figcaption>TPS escala con el número de clientes y se estabiliza tras el warm‑up.</figcaption>
+      </figure>
+      <details>
+        <summary>Ver más gráficos</summary>
+        <figure>
+          <img src="/images/2025-08/loadtest-v1/02a-latency.png" alt="Latencia">
+          <figcaption>Latencia p50/p95 bajo el perfil de carga.</figcaption>
+        </figure>
+        <figure>
+          <img src="/images/2025-08/loadtest-v1/02b-locks.png" alt="Locks">
+          <figcaption>Locks presentes pero controlados; 0 deadlocks.</figcaption>
+        </figure>
+      </details>
+    </section>
+
+    <section class="card">
+      <h2>Hallazgos</h2>
+      <ul>
+        <li>Cache hit &gt; 99% sostenido; impacto de índices en consultas BI.</li>
+        <li>Reducción de latencias tras optimizar JOINs críticos.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Acciones</h2>
+      <ul>
+        <li>Índice compuesto en <code>ordenes(fecha_orden, sucursal_id)</code>.</li>
+        <li>Ajuste de parámetros (si aplica) y plan de pruebas con 64 clientes.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Próximos pasos</h2>
+      <p>Workload mixto (OLTP + BI), mayor concurrencia y estrés en p95/p99 de latencia.</p>
+    </section>
+  </div>
 </body>
 </html>

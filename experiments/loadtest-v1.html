@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Load Test V1 — BitBunkerHQ Experimentos</title>
+  <meta name="description" content="Prueba de carga con pgbench sobre GreenhouseMarket: contexto, setup, métricas y hallazgos." />
+
+  <!-- (Opcional) OG para que se vea bonito al compartir -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Load Test V1 — BitBunkerHQ Experimentos" />
+  <meta property="og:description" content="pgbench: 32c/8j • 5 minutos • KPIs, latencias, locks y resultados." />
+  <meta property="og:url" content="https://bitbunkerhq.com/experiments/loadtest-v1.html" />
+  <meta property="og:image" content="https://bitbunkerhq.com/assets/og/experiments/loadtest-v1-og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{ --bg:#0b0f14; --surface:#0f1623; --muted:#9fb0c3; --text:#e6edf3; --accent:#5ac8fa; --accent-2:#a78bfa; }
+    html,body{ margin:0; background:var(--bg); color:var(--text); font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif; }
+    a{ color:var(--accent); text-decoration:none; } a:hover{ opacity:.9; }
+    .wrap{ max-width:1100px; margin:0 auto; padding:28px 20px 64px; }
+    .back{ display:inline-block; margin-bottom:8px; color:#d7e3f0; }
+    header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
+    .badge{ font-size:12px; letter-spacing:.08em; color:#c6d3e4; border:1px solid rgba(255,255,255,0.12); padding:6px 10px; border-radius:999px; }
+    h1{ font-size:clamp(26px,4.5vw,40px); margin:.2rem 0 .4rem; }
+    .meta{ color:var(--muted); margin-bottom:18px; }
+    .card{ background:var(--surface); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px; margin:18px 0; }
+    h2{ font-size:1.35rem; margin:8px 0 10px; color:#e8f4ff; }
+    p,li{ line-height:1.6; color:#cbd6e3; }
+    figure{ margin:14px 0; }
+    img{ width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 2px 10px rgba(0,0,0,.35); }
+    figcaption{ color:#a8b9c9; font-size:.92rem; margin-top:6px; }
+    details{ margin-top:12px; border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:10px 12px; }
+    summary{ cursor:pointer; color:#d9e3ee; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="/index.html#experiments">← Volver a todas las pruebas</a>
+    <header>
+      <span class="badge">Experimento</span>
+      <span></span>
+    </header>
+
+    <h1>Load Test V1 — 2025-08-12</h1>
+    <p class="meta">PostgreSQL 15 • GreenhouseMarket • pgbench <code>-c 32 -j 8 -T 300 -P 5</code> • Dataset: 15k órdenes, 35k líneas</p>
+
+    <section class="card">
+      <h2>Contexto & Hipótesis</h2>
+      <p>Establecer baseline de rendimiento y observar saturación de conexiones/TPS con <code>pgbench</code>. Validar estabilidad de cache hit y ausencia de deadlocks bajo carga.</p>
+    </section>
+
+    <section class="card">
+      <h2>Setup</h2>
+      <ul>
+        <li>Hardware/VM: (completar)</li>
+        <li>PostgreSQL: versión y parámetros (<code>max_connections</code>, <code>shared_buffers</code>, etc.).</li>
+        <li>Comando: <code>pgbench -c 32 -j 8 -T 300 -P 5</code></li>
+        <li>Dataset: GreenhouseMarket — 15k órdenes, 35k líneas de detalle.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Métricas clave</h2>
+      <figure>
+        <img loading="lazy" src="/images/2025-08/loadtest-v1/02-during-tps.png" alt="TPS durante la prueba">
+        <figcaption>TPS escala con el número de clientes y se estabiliza tras el warm-up.</figcaption>
+      </figure>
+      <details>
+        <summary>Ver más gráficos</summary>
+        <figure>
+          <img loading="lazy" src="/images/2025-08/loadtest-v1/02a-latency.png" alt="Latencia p50/p95 durante la carga">
+          <figcaption>Latencia p50/p95 bajo el perfil de carga aplicado.</figcaption>
+        </figure>
+        <figure>
+          <img loading="lazy" src="/images/2025-08/loadtest-v1/02b-locks.png" alt="Locks">
+          <figcaption>Locks presentes pero controlados; 0 deadlocks.</figcaption>
+        </figure>
+      </details>
+    </section>
+
+    <section class="card">
+      <h2>Hallazgos</h2>
+      <ul>
+        <li>Cache hit &gt; 99% sostenido.</li>
+        <li>Reducción de latencias tras optimizar JOINs críticos (ver Indexación V1).</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Acciones</h2>
+      <ul>
+        <li>Índice compuesto en <code>ordenes(fecha_orden, sucursal_id)</code>.</li>
+        <li>Plan de siguiente test con 64 clients y workload mixto.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Próximos pasos</h2>
+      <p>Workload mixto (OLTP + BI), stress en p95/p99 y validación de límites de concurrencia.</p>
+    </section>
+  </div>
+
+  <!-- Notas internas: imágenes en /images/2025-08/loadtest-v1/. -->
+</body>
+</html>
