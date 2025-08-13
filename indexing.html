@@ -9,8 +9,63 @@
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="/assets/favicon.png">
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bunker: {
+              50: '#f7f8fb',
+              100: '#eef1f7',
+              200: '#d9e0ee',
+              300: '#b9c6de',
+              400: '#7f9ac2',
+              500: '#4b6fa8',
+              600: '#31558f',
+              700: '#294673',
+              800: '#233a5c',
+              900: '#1b2c44',
+              950: '#121d2c',
+            },
+            accent: '#22d3ee'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .bg-grid {
+      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+  </style>
 </head>
 <body class="min-h-screen bg-bunker-950 text-white">
+<header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-bunker-950/70 bg-bunker-950/60 border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2 group">
+        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-accent/20 text-accent font-black">BB</span>
+        <span class="font-semibold tracking-tight group-hover:text-accent transition">BitBunker HQ</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm text-white/80">
+        <a class="hover:text-white" href="#proyectos">Proyectos</a>
+        <a class="hover:text-white" href="#progreso">Progreso</a>
+        <a class="hover:text-white" href="#sobre-mi">Sobre mí</a>
+        <a class="hover:text-white" href="#contacto">Contacto</a>
+        <a class="ml-2 inline-flex items-center gap-2 rounded-lg border border-white/15 px-3 py-1.5 hover:bg-white/5 transition" href="https://www.linkedin.com/in/fedevalenti" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </nav>
+    </div>
+  </header>
+
   <main class="max-w-6xl mx-auto px-4 py-10 md:py-14">
     <a href="/" class="inline-block text-white/70 hover:text-white mb-6">← Home</a>
     <h1 class="text-2xl md:text-3xl font-bold">Indexación & Tuning</h1>
@@ -19,5 +74,13 @@
       <p class="text-white/75 text-sm">Próximamente: casos reales con planes y comparativas.</p>
     </div>
   </main>
+
+  <footer class="text-sm text-white/60 border-t border-white/10 mt-12">
+    <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-2">
+      <p>© <span id="year"></span> BitBunker HQ – Fede Valenti</p>
+      <p class="opacity-80">Hecho con 💙, PostgreSQL y mucha curiosidad.</p>
+    </div>
+  </footer>
+  <script>document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());</script>
 </body>
 </html>
