@@ -19,21 +19,21 @@ Instrucciones rápidas:
     <div class="monitoring-block">
       <h3>1. Situación inicial</h3>
       <p>
-        Entorno estable y de baja actividad para establecer un baseline: conexiones mínimas, TPS plano y ausencia de deadlocks. Esto nos da un punto de comparación para los cambios.
+        Entorno estable y de baja actividad para establecer un baseline: conexiones mínimas a la base y a la instancia, TPS plano, ausencia de deadlocks. Esto nos da un punto de comparación para los cambios.
       </p>
       <figure>
-        <img src="images/2025-08/loadtest-v1/01-baseline-kpis.png" alt="KPIs iniciales: conexiones, TPS, cache hit">
-        <figcaption>Baseline: métricas planas y cache hit &gt; 99%.</figcaption>
+        <img src="images/2025-08/loadtest-v1/01-before-kpis.png" alt="KPIs iniciales: conexiones, TPS, cache hit">
+        <figcaption>Baseline: métricas planas y cache hit &gt; 100%.</figcaption>
       </figure>
       <details>
         <summary>Ver más gráficos de la etapa inicial</summary>
         <figure>
-          <img src="images/2025-08/loadtest-v1/01a-connections.png" alt="Conexiones por segundo">
+          <img src="images/2025-08/loadtest-v1/05-conexionesxseg-inicial" alt="Conexiones por segundo">
           <figcaption>Conexiones por segundo: patrón en reposo.</figcaption>
         </figure>
         <figure>
           <img src="images/2025-08/loadtest-v1/01b-buffers.png" alt="Buffers y cache">
-          <figcaption>Lecturas desde disco mínimas; cache efectivo.</figcaption>
+          <figcaption>Estado en reposo: sin operaciones activas.</figcaption>
         </figure>
       </details>
     </div>
