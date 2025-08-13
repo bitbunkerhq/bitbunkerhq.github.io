@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Título de la página – BitBunker HQ</title>
+  <meta name="description" content="Descripción corta de esta página.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/assets/favicon.png">
+
+  <!-- Inter + Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind config (colores del index) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bunker: {50:'#f7f8fb',100:'#eef1f7',200:'#d9e0ee',300:'#b9c6de',400:'#7f9ac2',500:'#4b6fa8',600:'#31558f',700:'#294673',800:'#233a5c',900:'#1b2c44',950:'#121d2c'},
+            accent: '#22d3ee'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Estilos base (los mismos del index) -->
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .bg-grid {
+      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-bunker-950 text-white bg-grid">
+
+
+  <!-- HEADER (el universal de arriba) -->
+  <!-- pega aquí el header universal -->
+
+  <!-- Botón volver (opcional en subpáginas) -->
+  <nav class="max-w-6xl mx-auto px-4 mt-4">
+    <a href="/index.html" class="inline-flex items-center gap-2 rounded-lg border border-white/15 px-3 py-2 text-sm text-white/90 hover:bg-white/5 transition">← Volver al inicio</a>
+  </nav>
+
+  <!-- CONTENIDO -->
+  <main class="max-w-6xl mx-auto px-4 py-10 md:py-14">
+    <h1 class="text-2xl md:text-3xl font-bold">Título dentro de la página</h1>
+    <p class="mt-2 text-white/80 max-w-3xl">Tu contenido va acá.</p>
+  </main>
+
+  <!-- FOOTER (igual al index) -->
+  <footer class="text-sm text-white/60 border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-2">
+      <p>© <span id="year"></span> BitBunker HQ – Fede Valenti</p>
+      <p class="opacity-80">Hecho con 💙, PostgreSQL y mucha curiosidad.</p>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

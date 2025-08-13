@@ -3,36 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="alternate icon" href="/assets/favicon.png">
-  <title>Indexación & Tuning – GreenhouseMarket</title>
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="alternate icon" href="/assets/favicon.png">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Indexación & Tuning – BitBunker HQ</title>
+  <meta name="description" content="Casos reales de optimización en PostgreSQL: índices, EXPLAIN ANALYZE y comparativas antes/después.">
 
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/assets/favicon.png">
+
+  <!-- Inter + Tailwind -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 
-
+  <!-- Tailwind config -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            bunker: {
-              50: '#f7f8fb',
-              100: '#eef1f7',
-              200: '#d9e0ee',
-              300: '#b9c6de',
-              400: '#7f9ac2',
-              500: '#4b6fa8',
-              600: '#31558f',
-              700: '#294673',
-              800: '#233a5c',
-              900: '#1b2c44',
-              950: '#121d2c',
-            },
+            bunker: {50:'#f7f8fb',100:'#eef1f7',200:'#d9e0ee',300:'#b9c6de',400:'#7f9ac2',500:'#4b6fa8',600:'#31558f',700:'#294673',800:'#233a5c',900:'#1b2c44',950:'#121d2c'},
             accent: '#22d3ee'
           }
         }
@@ -40,6 +30,7 @@
     }
   </script>
 
+  <!-- Estilos base -->
   <style>
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
@@ -49,38 +40,67 @@
     }
   </style>
 </head>
-<body class="min-h-screen bg-bunker-950 text-white">
-<header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-bunker-950/70 bg-bunker-950/60 border-b border-white/10">
+<body class="min-h-screen bg-bunker-950 text-white bg-grid">
+
+  <!-- Header universal -->
+  <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-bunker-950/70 bg-bunker-950/60 border-b border-white/10">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-2 group">
+      <a href="/index.html" class="flex items-center gap-2 group">
         <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-accent/20 text-accent font-black">BB</span>
         <span class="font-semibold tracking-tight group-hover:text-accent transition">BitBunker HQ</span>
       </a>
       <nav class="hidden md:flex items-center gap-6 text-sm text-white/80">
-        <a class="hover:text-white" href="#proyectos">Proyectos</a>
-        <a class="hover:text-white" href="#progreso">Progreso</a>
-        <a class="hover:text-white" href="#sobre-mi">Sobre mí</a>
-        <a class="hover:text-white" href="#contacto">Contacto</a>
+        <a class="hover:text-white" href="/index.html#proyectos">Proyectos</a>
+        <a class="hover:text-white" href="/index.html#progreso">Progreso</a>
+        <a class="hover:text-white" href="/index.html#sobre-mi">Sobre mí</a>
+        <a class="hover:text-white" href="/index.html#contacto">Contacto</a>
         <a class="ml-2 inline-flex items-center gap-2 rounded-lg border border-white/15 px-3 py-1.5 hover:bg-white/5 transition" href="https://www.linkedin.com/in/fedevalenti" target="_blank" rel="noopener">LinkedIn ↗</a>
       </nav>
     </div>
   </header>
 
+  <!-- Volver -->
+  <nav class="max-w-6xl mx-auto px-4 mt-4">
+    <a href="/index.html" class="inline-flex items-center gap-2 rounded-lg border border-white/15 px-3 py-2 text-sm text-white/90 hover:bg-white/5 transition">← Volver al inicio</a>
+  </nav>
+
+  <!-- Contenido -->
   <main class="max-w-6xl mx-auto px-4 py-10 md:py-14">
-    <a href="/" class="inline-block text-white/70 hover:text-white mb-6">← Home</a>
     <h1 class="text-2xl md:text-3xl font-bold">Indexación & Tuning</h1>
-    <p class="mt-2 text-white/80">EXPLAIN ANALYZE, índices simples/compuestos y parciales, bitmap scans y más.</p>
-    <div class="mt-6 rounded-xl border border-white/10 bg-bunker-900/60 p-6">
-      <p class="text-white/75 text-sm">Próximamente: casos reales con planes y comparativas.</p>
+    <p class="mt-2 text-white/80 max-w-3xl">
+      Esta sección presentará **casos reales de optimización**: lectura de planes con <code>EXPLAIN ANALYZE</code>, 
+      diseño de **índices simples/compuestos/parciales**, uso de **Bitmap Scan**, y comparativas “antes/después” con tiempos y costos.
+    </p>
+
+    <div class="mt-6 grid gap-6 md:grid-cols-2">
+      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6">
+        <h2 class="text-lg font-semibold text-accent">Búsquedas por fecha + sucursal</h2>
+        <p class="mt-2 text-white/80 text-sm">Índice compuesto y partición por rango; reducción de tiempos p95.</p>
+      </article>
+      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6">
+        <h2 class="text-lg font-semibold text-accent">Índices parciales</h2>
+        <p class="mt-2 text-white/80 text-sm">Filtros por estado/campaña con baja cardinalidad y alto impacto.</p>
+      </article>
+      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6">
+        <h2 class="text-lg font-semibold text-accent">Refactor de JOINs</h2>
+        <p class="mt-2 text-white/80 text-sm">Reordenamiento, selecciones y claves para bajar costos del plan.</p>
+      </article>
+      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6">
+        <h2 class="text-lg font-semibold text-accent">Parámetros & Work_mem</h2>
+        <p class="mt-2 text-white/80 text-sm">Ajustes controlados y medición del impacto en hash/merge.</p>
+      </article>
     </div>
+
+    <p class="mt-6 text-white/70 text-sm">En breve publicaré los primeros casos con capturas de planes y métricas comparativas.</p>
   </main>
 
-  <footer class="text-sm text-white/60 border-t border-white/10 mt-12">
+  <!-- Footer -->
+  <footer class="text-sm text-white/60 border-t border-white/10">
     <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-2">
       <p>© <span id="year"></span> BitBunker HQ – Fede Valenti</p>
       <p class="opacity-80">Hecho con 💙, PostgreSQL y mucha curiosidad.</p>
     </div>
   </footer>
-  <script>document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());</script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

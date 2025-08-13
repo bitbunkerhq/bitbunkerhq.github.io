@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BI · Dashboards & Analytics – BitBunker HQ</title>
-  <meta name="description" content="KPIs de ventas, productos top, márgenes y estacionalidad conectados a PostgreSQL. Dashboards y análisis de negocio listos para BI.">
+  <meta name="description" content="KPIs de ventas, productos top, márgenes y estacionalidad conectados a PostgreSQL. Próximamente: galería de dashboards y casos reales.">
 
   <!-- Favicon -->
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Tailwind config (colores del sitio) -->
+  <!-- Tailwind config (colores del index) -->
   <script>
     tailwind.config = {
       theme: {
@@ -30,16 +30,19 @@
     }
   </script>
 
-  <!-- Estilos base -->
+  <!-- Estilos base (mismos del index) -->
   <style>
-    html{scroll-behavior:smooth}
-    body{font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-    .bg-grid{background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0);background-size:24px 24px;}
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .bg-grid {
+      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
   </style>
 </head>
-<body class="min-h-screen bg-bunker-950 text-white">
+<body class="min-h-screen bg-bunker-950 text-white bg-grid">
 
-  <!-- Header -->
+  <!-- Header universal -->
   <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-bunker-950/70 bg-bunker-950/60 border-b border-white/10">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href="/index.html" class="flex items-center gap-2 group">
@@ -51,4 +54,53 @@
         <a class="hover:text-white" href="/index.html#progreso">Progreso</a>
         <a class="hover:text-white" href="/index.html#sobre-mi">Sobre mí</a>
         <a class="hover:text-white" href="/index.html#contacto">Contacto</a>
-        <a class="ml-2 inline-flex items-center gap-2 rounded-lg border border-white/15 px-3 py-1.5 hover:bg-white/5 transition" href="https://www.linkedin.com/in/fedevalenti" tar
+        <a class="ml-2 inline-flex items-center gap-2 rounded-lg border border-white/15 px-3 py-1.5 hover:bg-white/5 transition" href="https://www.linkedin.com/in/fedevalenti" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Volver -->
+  <nav class="max-w-6xl mx-auto px-4 mt-4">
+    <a href="/index.html" class="inline-flex items-center gap-2 rounded-lg border border-white/15 px-3 py-2 text-sm text-white/90 hover:bg-white/5 transition">← Volver al inicio</a>
+  </nav>
+
+  <!-- Contenido -->
+  <main class="max-w-6xl mx-auto px-4 py-10 md:py-14">
+    <h1 class="text-2xl md:text-3xl font-bold">BI · Dashboards & Analytics</h1>
+    <p class="mt-2 text-white/80 max-w-3xl">
+      Esta sección reunirá **tableros conectados a PostgreSQL** con KPIs de ventas, productos, márgenes y estacionalidad. 
+      La idea es mostrar **scenarios reales** y el detrás de escena: modelado, vistas “BI-ready” y decisiones de diseño de visualizaciones.
+    </p>
+
+    <div class="mt-6 grid gap-6 md:grid-cols-2">
+      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6">
+        <h2 class="text-lg font-semibold text-accent">Ventas & Estacionalidad</h2>
+        <p class="mt-2 text-white/80 text-sm">Comparativa mensual/anual, contribución por categoría y detección de picos.</p>
+      </article>
+      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6">
+        <h2 class="text-lg font-semibold text-accent">Productos Top & Rentabilidad</h2>
+        <p class="mt-2 text-white/80 text-sm">Pareto de productos, márgenes y mix por tienda/campaña.</p>
+      </article>
+      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6">
+        <h2 class="text-lg font-semibold text-accent">Clientes & Cohortes</h2>
+        <p class="mt-2 text-white/80 text-sm">Altas/bajas, recurrencia y cohortes para entender retención y churn.</p>
+      </article>
+      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6">
+        <h2 class="text-lg font-semibold text-accent">Data Quality</h2>
+        <p class="mt-2 text-white/80 text-sm">Checks de integridad, consistencia y cobertura para asegurar confianza.</p>
+      </article>
+    </div>
+
+    <p class="mt-6 text-white/70 text-sm">Pronto publicaré las primeras capturas y la explicación técnica de cada dashboard.</p>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-sm text-white/60 border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-2">
+      <p>© <span id="year"></span> BitBunker HQ – Fede Valenti</p>
+      <p class="opacity-80">Hecho con 💙, PostgreSQL y mucha curiosidad.</p>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

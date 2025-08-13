@@ -1,89 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Proyectos – BitBunker HQ</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #111;
-      color: #eee;
-    }
-    header {
-      background-color: #1e1e1e;
-      padding: 20px;
-      text-align: center;
-      border-bottom: 1px solid #333;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 26px;
-      color: #00d8ff;
-    }
-    nav a {
-      color: #ccc;
-      text-decoration: none;
-      margin: 0 15px;
-    }
-    nav a:hover {
-      color: #00d8ff;
-    }
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 40px 20px;
-    }
-    .project {
-      background-color: #1e1e1e;
-      border: 1px solid #333;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 30px;
-    }
-    .project h2 {
-      color: #00d8ff;
-    }
-    .project p {
-      margin-bottom: 10px;
-    }
-    .project a {
-      color: #00d8ff;
-      text-decoration: underline;
-    }
-  </style>
+  <meta name="description" content="Listado de proyectos activos y próximos: monitoreo con Grafana, optimización en PostgreSQL e iniciativas BI.">
 
   <!-- Favicon -->
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="/assets/favicon.png">
 
-
+  <!-- Inter + Tailwind -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Tailwind config -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            bunker: {
-              50: '#f7f8fb',
-              100: '#eef1f7',
-              200: '#d9e0ee',
-              300: '#b9c6de',
-              400: '#7f9ac2',
-              500: '#4b6fa8',
-              600: '#31558f',
-              700: '#294673',
-              800: '#233a5c',
-              900: '#1b2c44',
-              950: '#121d2c',
-            },
+            bunker: {50:'#f7f8fb',100:'#eef1f7',200:'#d9e0ee',300:'#b9c6de',400:'#7f9ac2',500:'#4b6fa8',600:'#31558f',700:'#294673',800:'#233a5c',900:'#1b2c44',950:'#121d2c'},
             accent: '#22d3ee'
           }
         }
@@ -91,6 +30,7 @@
     }
   </script>
 
+  <!-- Estilos base -->
   <style>
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
@@ -100,51 +40,67 @@
     }
   </style>
 </head>
-<body class="min-h-screen bg-bunker-950 text-white">
+<body class="min-h-screen bg-bunker-950 text-white bg-grid">
 
+  <!-- Header universal -->
   <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-bunker-950/70 bg-bunker-950/60 border-b border-white/10">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-2 group">
+      <a href="/index.html" class="flex items-center gap-2 group">
         <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-accent/20 text-accent font-black">BB</span>
         <span class="font-semibold tracking-tight group-hover:text-accent transition">BitBunker HQ</span>
       </a>
       <nav class="hidden md:flex items-center gap-6 text-sm text-white/80">
-        <a class="hover:text-white" href="#proyectos">Proyectos</a>
-        <a class="hover:text-white" href="#progreso">Progreso</a>
-        <a class="hover:text-white" href="#sobre-mi">Sobre mí</a>
-        <a class="hover:text-white" href="#contacto">Contacto</a>
+        <a class="hover:text-white" href="/index.html#proyectos">Proyectos</a>
+        <a class="hover:text-white" href="/index.html#progreso">Progreso</a>
+        <a class="hover:text-white" href="/index.html#sobre-mi">Sobre mí</a>
+        <a class="hover:text-white" href="/index.html#contacto">Contacto</a>
         <a class="ml-2 inline-flex items-center gap-2 rounded-lg border border-white/15 px-3 py-1.5 hover:bg-white/5 transition" href="https://www.linkedin.com/in/fedevalenti" target="_blank" rel="noopener">LinkedIn ↗</a>
       </nav>
     </div>
   </header>
 
-  <div class="container">
-    <div class="project">
-      <h2>Dashboard Financiero – Clínica Demo</h2>
-      <p>Power BI con métricas de ingresos, asistencia y rentabilidad. Incluye análisis por especialidad y visualización mensual/anual.</p>
-      <p><a href="#">Ver demo o captura</a></p>
-    </div>
+  <!-- Volver -->
+  <nav class="max-w-6xl mx-auto px-4 mt-4">
+    <a href="/index.html" class="inline-flex items-center gap-2 rounded-lg border border-white/15 px-3 py-2 text-sm text-white/90 hover:bg-white/5 transition">← Volver al inicio</a>
+  </nav>
 
-    <div class="project">
-      <h2>Métricas PostgreSQL en Grafana</h2>
-      <p>Panel real montado con Prometheus + Node Exporter en servidor Linux. Visualiza CPU, memoria, consultas y latencia en vivo.</p>
-      <p><a href="#">Ver configuración</a></p>
-    </div>
+  <!-- Contenido -->
+  <main class="max-w-6xl mx-auto px-4 py-10 md:py-14">
+    <h1 class="text-2xl md:text-3xl font-bold">Proyectos</h1>
+    <p class="mt-2 text-white/80 max-w-3xl">
+      Un resumen de las iniciativas que estoy construyendo. Cada tarjeta llevará a una página con detalles técnicos, capturas y aprendizajes clave.
+    </p>
 
-    <div class="project">
-      <h2>Script SQL – Análisis de churn en clientes</h2>
-      <p>Query optimizada en PostgreSQL para detectar pérdida de clientes en servicios mensuales. Incluye índice, `EXPLAIN`, y refactor PL/pgSQL.</p>
-      <p><a href="#">Ver código</a></p>
-    </div>
-  </div>
+    <section class="mt-6 grid gap-6 md:grid-cols-2">
+      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6">
+        <h2 class="text-lg font-semibold text-accent">Monitoring – PostgreSQL + Grafana</h2>
+        <p class="mt-2 text-white/80 text-sm">Métricas en vivo con Prometheus y exporters. Conexiones, TPS, latencias, locks y salud del sistema.</p>
+        <a class="mt-3 inline-block text-sm text-accent hover:underline" href="/monitoring.html">Ver configuración</a>
+      </article>
 
+      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6">
+        <h2 class="text-lg font-semibold text-accent">Indexación & Tuning</h2>
+        <p class="mt-2 text-white/80 text-sm">Casos con EXPLAIN ANALYZE, índices y optimización de consultas, mostrando mejoras cuantificables.</p>
+        <a class="mt-3 inline-block text-sm text-accent hover:underline" href="/indexing.html">Abrir sección</a>
+      </article>
 
-  <footer class="text-sm text-white/60 border-t border-white/10 mt-12">
+      <article class="rounded-2xl border border-white/10 bg-bunker-900/60 p-6">
+        <h2 class="text-lg font-semibold text-accent">BI · Dashboards</h2>
+        <p class="mt-2 text-white/80 text-sm">KPIs de negocio sobre vistas BI-ready. Historias con datos, estacionalidad y decisiones accionables.</p>
+        <a class="mt-3 inline-block text-sm text-accent hover:underline" href="/bi.html">Ver BI</a>
+      </article>
+    </section>
+
+    <p class="mt-6 text-white/70 text-sm">Pronto sumaré más proyectos y enlaces directos a demos/código.</p>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-sm text-white/60 border-t border-white/10">
     <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-2">
       <p>© <span id="year"></span> BitBunker HQ – Fede Valenti</p>
       <p class="opacity-80">Hecho con 💙, PostgreSQL y mucha curiosidad.</p>
     </div>
   </footer>
-  <script>document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());</script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
