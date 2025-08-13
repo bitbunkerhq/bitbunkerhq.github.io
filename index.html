@@ -323,7 +323,7 @@
       <p>© <span id="year"></span> BitBunker HQ – Fede Valenti</p>
       <p class="opacity-80">Hecho con 💙, PostgreSQL y mucha curiosidad.</p>
       <!-- contador visible pequeño -->
-      <p class="opacity-80">Visitas: <span id="visitas">—</span></p>
+      <p style="color: transparent; user-select: text;">Visitas: <span id="visitas"></span></p>
     </div>
   </footer>
 
@@ -407,44 +407,5 @@
       });
   })();
 </script>
-
-
-
-
-    // Contador de visitas (CountAPI con fallback localStorage)
-    (function() {
-      const el = document.getElementById('visitas');
-      if (!el) return;
-
-      const url = 'https://api.countapi.xyz/hit/bitbunkerhq.com/visitas';
-
-      fetch(url, { cache: 'no-store' })
-        .then(r => r.json())
-        .then(d => {
-          if (d && typeof d.value === 'number') {
-            el.textContent = d.value.toLocaleString();
-            try { localStorage.setItem('bbhq_visitas_cache', String(d.value)); } catch (_) {}
-          } else {
-            throw new Error('Respuesta inesperada');
-          }
-        })
-        .catch(() => {
-          // Fallback: mostrar último valor cacheado o un contador local
-          try {
-            const cached = localStorage.getItem('bbhq_visitas_cache');
-            if (cached) {
-              el.textContent = Number(cached).toLocaleString();
-            } else {
-              const localKey = 'bbhq_visitas_local';
-              const n = Number(localStorage.getItem(localKey) || '0') + 1;
-              localStorage.setItem(localKey, String(n));
-              el.textContent = n.toLocaleString();
-            }
-          } catch (_) {
-            el.textContent = '—';
-          }
-        });
-    })();
-  </script>
 </body>
 </html>
