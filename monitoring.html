@@ -1,39 +1,33 @@
-<!-- =============================
-BITBUNKERHQ – MONITORING OVERVIEW + EXPERIMENTS LIST + NOTAS
-Instrucciones rápidas:
-1) Copia el bloque <section id="monitoring"> en tu index.html donde quieras que aparezca la sección.
-2) Crea la carpeta /experiments/ y añade páginas por prueba usando la plantilla de más abajo.
-3) Coloca capturas en /images/YYYY-MM/<slug>/ y referencia los archivos en <img src="...">.
-4) Actualiza la lista "Todas las pruebas" (orden inverso, lo último primero).
-============================= -->
-
-<!-- ===== MONITORING OVERVIEW (coloca este bloque en index.html) ===== -->
+<!-- ===== MONITORING OVERVIEW ===== -->
 <section id="monitoring" class="monitoring-section">
   <div class="container">
     <h2>Monitoring en Acción</h2>
     <p class="intro">
-      Observabilidad de <strong>PostgreSQL</strong> con <strong>Prometheus + Grafana</strong>. Aquí contamos la historia de la <em>última prueba relevante</em> (baseline → carga → resultados), y al final listamos todos los casos anteriores.
+      Observabilidad de <strong>PostgreSQL</strong> con <strong>Prometheus + Grafana</strong>. 
+      Aquí contamos la historia de la <em>última prueba relevante</em> (baseline → carga → resultados), 
+      y al final listamos todos los casos anteriores.
     </p>
 
     <!-- 1) ANTES -->
     <div class="monitoring-block">
       <h3>1. Situación inicial</h3>
       <p>
-        Entorno estable y de baja actividad para establecer un baseline: conexiones mínimas a la base y a la instancia, TPS plano, ausencia de deadlocks. Esto nos da un punto de comparación para los cambios.
+        Entorno estable y de baja actividad para establecer un baseline: conexiones mínimas a la base 
+        y a la instancia, TPS plano, ausencia de deadlocks. Esto nos da un punto de comparación para los cambios.
       </p>
       <figure>
         <img src="images/2025-08/loadtest-v1/01-before-kpis.png" alt="KPIs iniciales: conexiones, TPS, cache hit">
-        <figcaption>Baseline: métricas planas y cache hit &gt; 100%.</figcaption>
+        <figcaption>Baseline: métricas planas y cache hit &gt; 99%.</figcaption>
       </figure>
       <details>
         <summary>Ver más gráficos de la etapa inicial</summary>
         <figure>
-          <img src="images/2025-08/loadtest-v1/05-conexionesxseg-inicial" alt="Conexiones por segundo">
-          <figcaption>Conexiones por segundo: patrón en reposo.</figcaption>
+          <img src="images/2025-08/loadtest-v1/06-filas-leidas.png" alt="Actividad de filas (read/change)">
+          <figcaption>Flujo constante de filas leídas (Returned) en reposo, sin operaciones de inserción, actualización o borrado. Esto confirma que la base estaba recibiendo únicamente consultas de lectura durante la línea base.</figcaption>
         </figure>
         <figure>
-          <img src="images/2025-08/loadtest-v1/01b-buffers.png" alt="Buffers y cache">
-          <figcaption>Estado en reposo: sin operaciones activas.</figcaption>
+          <img src="images/2025-08/loadtest-v1/05-conexiones-por-estado.png" alt="Conexiones por estado">
+          <figcaption>Durante la línea base no se registraron conexiones activas ni en espera. La base permaneció sin actividad de usuarios o procesos externos, ideal para medir un estado “en reposo” antes de iniciar las pruebas de carga.</figcaption>
         </figure>
       </details>
     </div>
@@ -42,53 +36,99 @@ Instrucciones rápidas:
     <div class="monitoring-block">
       <h3>2. Pruebas de carga</h3>
       <p>
-        Ejecutamos <strong>pgbench</strong> y consultas BI intensivas para simular concurrencia real. Observamos comportamiento bajo presión: latencias, locks, variaciones de TPS y cache hit.
+        Ejecutamos <strong>pgbench</strong> y consultas BI intensivas para simular concurrencia real. 
+        Observamos comportamiento bajo presión: latencias, locks, variaciones de TPS y cache hit.
       </p>
       <figure>
         <img src="images/2025-08/loadtest-v1/02-during-tps.png" alt="TPS durante las pruebas">
-        <figcaption>El TPS sube al inicio y se estabiliza tras el warm-up.</figcaption>
+        <figcaption>Durante la prueba de carga simultánea, el servidor PostgreSQL alcanzó 49 conexiones activas y 2 transacciones abiertas de forma concurrente.
+El pico de rendimiento se registró en 1.15K transacciones por segundo (TPS), con un alto volumen de filas leídas, insertadas y actualizadas en tiempo real.
+Este panel muestra el impacto global de la carga sobre conexiones, actividad de consultas y movimiento de datos.</figcaption>
       </figure>
       <details>
         <summary>Ver más gráficos de la prueba</summary>
         <figure>
-          <img src="images/2025-08/loadtest-v1/02a-latency.png" alt="Latencia">
-          <figcaption>Latencia p50/p95 y su relación con el número de clientes.</figcaption>
+          <img src="images/2025-08/loadtest-v1/03-peak-health.png" alt="Latencia">
+          <figcaption>Durante todo el ensayo no se produjeron deadlocks.
+Los locks por modo se mantuvieron en niveles controlados, indicando que la concurrencia fue gestionada correctamente por PostgreSQL sin bloqueos críticos que interrumpieran la ejecución de las consultas.</figcaption>
         </figure>
         <figure>
-          <img src="images/2025-08/loadtest-v1/02b-locks.png" alt="Locks">
-          <figcaption>Locks controlados; sin eventos de deadlock.</figcaption>
+          <img src="images/2025-08/loadtest-v1/07-resources-during.png" alt="Locks">
+          <figcaption>El incremento de actividad elevó el uso de CPU hasta un 0,75% y la memoria RAM hasta un 9,15%.
+Estos valores muestran que la infraestructura tenía capacidad de sobra para absorber la carga aplicada, sin comprometer la estabilidad del sistema.</figcaption>
         </figure>
       </details>
     </div>
 
     <!-- 3) DESPUÉS -->
     <div class="monitoring-block">
-      <h3>3. Resultados y balance</h3>
-      <p>
-        Tras índices estratégicos y revisión con <em>EXPLAIN ANALYZE</em>, bajaron tiempos de respuesta y se mantuvo cache hit &gt; 99%. Se validó la ausencia de deadlocks bajo el perfil de carga ejecutado.
-      </p>
-      <figure>
-        <img src="images/2025-08/loadtest-v1/03-after-kpis.png" alt="KPIs después de optimizaciones">
-        <figcaption>KPIs tras ajustes: throughput estable y menor latencia.</figcaption>
-      </figure>
-      <details>
-        <summary>Ver comparativas y anomalías</summary>
-        <figure>
-          <img src="images/2025-08/loadtest-v1/03a-comparison.png" alt="Comparativa antes vs después">
-          <figcaption>Comparativa directa baseline vs. optimizado.</figcaption>
-        </figure>
+<h3>3. Resultados y balance</h3>
+
+<p>
+Tras dos pruebas de carga independientes, el sistema demostró su capacidad para absorber picos de concurrencia y actividad sin degradación sostenida.
+</p>
+
+<p>
+El gráfico muestra cómo, al finalizar cada ciclo de carga, las métricas clave —conexiones, TPS, actividad de filas, locks y deadlocks— retornan rápidamente a valores normales.
+</p>
+
+<p>
+Este comportamiento confirma un <strong>baseline estable post-prueba</strong>, validando tanto la configuración de PostgreSQL como la capacidad del entorno para manejar cargas intermitentes sin impacto residual.
+</p>
+
+<br>
+
+<p>
+La ejecución de las pruebas de carga permitió validar el comportamiento del servidor PostgreSQL bajo un escenario de concurrencia moderada y consultas de alta frecuencia.
+</p>
+
+<h4>Estabilidad del sistema:</h4>
+<p>
+No se detectaron errores críticos ni caídas durante las pruebas. Todos los procesos se ejecutaron y finalizaron de forma ordenada, sin comprometer la disponibilidad de la base de datos.
+</p>
+
+<h4>Concurrencia gestionada:</h4>
+<p>
+El motor PostgreSQL manejó correctamente las 49 conexiones activas simultáneas y las operaciones concurrentes, manteniendo la latencia en valores bajos.
+</p>
+
+<h4>Rendimiento:</h4>
+<p>
+Se alcanzó un pico de 1.15K transacciones por segundo (TPS), con un flujo constante de inserciones, actualizaciones y lecturas en grandes volúmenes de filas.
+</p>
+
+<h4>Integridad y ausencia de bloqueos graves:</h4>
+<p>
+Los locks observados durante la ejecución se mantuvieron dentro de valores esperados para este tipo de pruebas, y no se registraron deadlocks.
+</p>
+
+<h4>Recursos del sistema:</h4>
+<p>
+El consumo de CPU y memoria mostró un aumento controlado, confirmando que el hardware actual dispone de margen para cargas más exigentes.
+</p>
+
+<h4>Conclusión:</h4>
+<p>
+El entorno demostró una capacidad óptima para absorber picos de actividad sin degradar el servicio, lo que indica que la configuración actual es adecuada para escenarios de uso real y que existe espacio para escalar la carga en futuros ensayos.
+</p>
+
+<figure>
+  <img src="images/2025-08/loadtest-v1/08-final-reposo.png" alt="Dashboard tras pruebas de carga">
+  <figcaption>Visión global de métricas tras las pruebas de carga: recuperación estable y sin impacto residual.</figcaption>
+</figure>
+
       </details>
     </div>
 
-    <!-- LISTA DE TODOS LOS CASOS (orden inverso: lo más nuevo primero) -->
+    <!-- LISTA DE TODOS LOS CASOS
     <section id="experiments" class="experiments-list">
       <h3>Todas las pruebas</h3>
       <ul>
-        <li><a href="/experiments/loadtest-v1.html">Load Test V1 (2025‑08‑12) — pgbench 32c/8j, 5m</a></li>
-        <li><a href="/experiments/bi-queries-v1.html">BI Queries V1 (2025‑08‑10) — Top productos/mes</a></li>
-        <!-- Añade nuevas pruebas aquí (siempre arriba) -->
+        <li><a href="/experiments/loadtest-v1.html">Load Test V1 (2025-08-12) — pgbench 32c/8j, 5m</a></li>
+        <li><a href="/experiments/bi-queries-v1.html">BI Queries V1 (2025-08-10) — Top productos/mes</a></li>
       </ul>
     </section>
+     -->
   </div>
 </section>
 
@@ -111,146 +151,3 @@ Instrucciones rápidas:
   details { margin-top:10px; border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:10px 12px; }
   summary { cursor:pointer; color:#d9e3ee; }
 </style>
-
-
-<!-- ===== NOTAS COMENTADAS (inclúyelo en index.html, debajo del overview) ===== -->
-<section id="notas-monitoring" class="notes-section">
-  <div class="container">
-    <h3>Notas de diseño: cómo documentamos pruebas y por qué</h3>
-    <ol>
-      <li><strong>Historia clara en la portada (Overview):</strong> Siempre mostramos la última prueba con 3 momentos (Antes / Durante / Después). Evitamos scroll infinito y mantenemos foco.</li>
-      <li><strong>Profundidad sin ruido:</strong> Usamos <code>&lt;details&gt;</code> para gráficos extra y comparativas. Así el lector curioso puede abrir y explorar sin romper el flujo.</li>
-      <li><strong>Escalabilidad:</strong> Cada prueba nueva vive en su propia URL (<code>/experiments/&lt;slug&gt;.html</code>) y su carpeta de imágenes (<code>/images/YYYY-MM/&lt;slug&gt;/</code>). Esto facilita Git, enlaces y orden histórico.</li>
-      <li><strong>Orden inverso:</strong> En la lista “Todas las pruebas”, lo más nuevo va primero. Mantiene la relevancia al día y simplifica compartir novedades.</li>
-      <li><strong>Convenciones de nombres:</strong> Slug corto y descriptivo (ej.: <code>loadtest-v1</code>, <code>bi-queries-v1</code>). Imágenes numeradas con prefijo (<code>01-</code>, <code>02-</code>) y descripción breve.</li>
-      <li><strong>Reuso del formato en otras áreas:</strong> Esta misma estructura aplica a <em>Indexación</em> y a <em>BI</em> (Dashboard/KPIs por dominios: Clientes, Facturación, Devoluciones...). Cada dominio puede tener su Overview y sus casos.</li>
-      <li><strong>Publicación continua:</strong> Este esquema te permite subir avances graduales a LinkedIn (link a una prueba específica) sin agotar material. La portada siempre refleja lo último.</li>
-    </ol>
-
-    <!-- Checklist operativo para nuevas pruebas -->
-    <h4>Checklist para la próxima prueba</h4>
-    <ul>
-      <li>Crear slug (p.ej. <code>loadtest-v2</code>) y carpeta de imágenes: <code>/images/2025-09/loadtest-v2/</code>.</li>
-      <li>Copiar la plantilla <em>case study</em> a <code>/experiments/loadtest-v2.html</code> y completar: contexto, setup, ejecución, métricas, hallazgos, acciones.</li>
-      <li>Exportar 3–5 gráficos “hero” y el resto como extra dentro de <code>&lt;details&gt;</code>.</li>
-      <li>Actualizar la lista “Todas las pruebas” (poner el nuevo enlace arriba).</li>
-      <li>(Opcional) Actualizar el Overview para que la nueva prueba sea la destacada.</li>
-    </ul>
-  </div>
-</section>
-
-<style>
-  .notes-section { background:#0d1430; color:#e6edf3; padding:40px 20px; border-top:1px solid rgba(255,255,255,0.06); }
-  .notes-section .container { max-width:1100px; margin:0 auto; }
-  .notes-section h3 { margin-bottom:12px; }
-  .notes-section ol { margin-left:18px; }
-  .notes-section li { margin:8px 0; color:#c9d6e6; }
-  .notes-section h4 { margin-top:22px; color:#5ac8fa; }
-</style>
-
-
-<!-- ===== PLANTILLA – PÁGINA POR PRUEBA (guárdala como /experiments/<slug>.html) ===== -->
-<!-- Ejemplo: /experiments/loadtest-v1.html -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Load Test V1 – BitBunkerHQ Experimentos</title>
-  <meta name="description" content="Prueba de carga con pgbench sobre GreenhouseMarket. Contexto, setup, ejecución, métricas y hallazgos.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{ --bg:#0b0f14; --card:#101623; --text:#e6edf3; --muted:#9fb0c3; --accent:#5ac8fa; }
-    html,body{ background:var(--bg); color:var(--text); margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif; }
-    .wrap{ max-width:1100px; margin:0 auto; padding:28px 20px 64px; }
-    a{ color:var(--accent); }
-    header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
-    header a{ text-decoration:none; }
-    .badge{ font-size:12px; letter-spacing:.08em; color:#c6d3e4; border:1px solid rgba(255,255,255,0.12); padding:6px 10px; border-radius:999px; }
-    h1{ font-size:clamp(26px,4.5vw,40px); margin:.2rem 0 .4rem; }
-    .meta{ color:var(--muted); margin-bottom:18px; }
-    .card{ background:var(--card); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:18px; margin:18px 0; }
-    h2{ font-size:1.35rem; margin:10px 0; color:#e8f4ff; }
-    p,li{ line-height:1.6; color:#cbd6e3; }
-    figure{ margin:16px 0; }
-    img{ width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 2px 10px rgba(0,0,0,0.35); }
-    figcaption{ color:#a8b9c9; font-size:.92rem; margin-top:6px; }
-    details{ margin-top:12px; border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:10px 12px; }
-    summary{ cursor:pointer; color:#d9e3ee; }
-    .back{ display:inline-block; margin-bottom:8px; }
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <a class="back" href="/index.html#experiments">← Volver a todas las pruebas</a>
-    <header>
-      <span class="badge">Experimento</span>
-      <span></span>
-    </header>
-    <h1>Load Test V1 — 2025‑08‑12</h1>
-    <p class="meta">PostgreSQL 15 • GreenhouseMarket • pgbench <code>-c 32 -j 8 -T 300 -P 5</code> • Dataset: 15k órdenes, 35k líneas</p>
-
-    <section class="card">
-      <h2>Contexto & Hipótesis</h2>
-      <p>Establecer baseline de rendimiento y observar saturación de conexiones/TPS con <code>pgbench</code>. Validar estabilidad de cache hit y ausencia de deadlocks bajo carga.</p>
-    </section>
-
-    <section class="card">
-      <h2>Setup</h2>
-      <ul>
-        <li>Hardware/VM: (completar)</li>
-        <li>PostgreSQL: versión, parámetros relevantes (p.ej. <code>max_connections</code>, <code>shared_buffers</code>).</li>
-        <li>Comando pgbench: <code>-c 32 -j 8 -T 300 -P 5</code>.</li>
-        <li>Dataset: GreenhouseMarket — 15k órdenes, 35k líneas de detalle.</li>
-      </ul>
-    </section>
-
-    <section class="card">
-      <h2>Ejecución</h2>
-      <p>Descripción breve del procedimiento: inicio de prueba, warm‑up, observación de métricas en Grafana, toma de capturas.</p>
-    </section>
-
-    <section class="card">
-      <h2>Métricas clave</h2>
-      <figure>
-        <img src="/images/2025-08/loadtest-v1/02-during-tps.png" alt="TPS durante la prueba">
-        <figcaption>TPS escala con el número de clientes y se estabiliza tras el warm‑up.</figcaption>
-      </figure>
-      <details>
-        <summary>Ver más gráficos</summary>
-        <figure>
-          <img src="/images/2025-08/loadtest-v1/02a-latency.png" alt="Latencia">
-          <figcaption>Latencia p50/p95 bajo el perfil de carga.</figcaption>
-        </figure>
-        <figure>
-          <img src="/images/2025-08/loadtest-v1/02b-locks.png" alt="Locks">
-          <figcaption>Locks presentes pero controlados; 0 deadlocks.</figcaption>
-        </figure>
-      </details>
-    </section>
-
-    <section class="card">
-      <h2>Hallazgos</h2>
-      <ul>
-        <li>Cache hit &gt; 99% sostenido; impacto de índices en consultas BI.</li>
-        <li>Reducción de latencias tras optimizar JOINs críticos.</li>
-      </ul>
-    </section>
-
-    <section class="card">
-      <h2>Acciones</h2>
-      <ul>
-        <li>Índice compuesto en <code>ordenes(fecha_orden, sucursal_id)</code>.</li>
-        <li>Ajuste de parámetros (si aplica) y plan de pruebas con 64 clientes.</li>
-      </ul>
-    </section>
-
-    <section class="card">
-      <h2>Próximos pasos</h2>
-      <p>Workload mixto (OLTP + BI), mayor concurrencia y estrés en p95/p99 de latencia.</p>
-    </section>
-  </div>
-</body>
-</html>
