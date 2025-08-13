@@ -66,7 +66,7 @@
     }
   </style>
 </head>
-<body class="min-h-screen bg-bunker-950 text-white">
+<body class="min-h-screen bg-bunker-950 text-white bg-grid">
   <!-- Header -->
   <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-bunker-950/70 bg-bunker-950/60 border-b border-white/10">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -152,6 +152,7 @@
                 data-src="/images/Main-triple/diagrama.png"
                 data-title="Modelo Relacional Optimizado"
                 data-desc="Estructura completa de la base de datos GreenhouseMarket, diseñada para análisis y rendimiento."
+                data-fit="contain" 
                 onclick="swapGrafanaFromButton(this)"
                 aria-label="Ver: Modelo Relacional Optimizado">
                 <img src="/images/Main-triple/diagrama.png" alt="Miniatura: Modelo Relacional Optimizado" class="h-20 w-full object-cover group-hover:opacity-90" loading="lazy" />
@@ -163,6 +164,7 @@
                 data-src="/images/Main-triple/postgres-ubuntu.png"
                 data-title="Potenciado por PostgreSQL"
                 data-desc="Aprovechando la base de datos open source más avanzada para administración, análisis y BI."
+                data-fit="contain" 
                 onclick="swapGrafanaFromButton(this)"
                 aria-label="Ver: Potenciado por PostgreSQL">
                 <img src="/images/Main-triple/postgres-ubuntu.png" alt="Miniatura: Potenciado por PostgreSQL" class="h-20 w-full object-cover group-hover:opacity-90" loading="lazy" />
@@ -330,19 +332,34 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Cambia imagen + título + descripción a partir de los data-* del botón
-    function swapGrafanaFromButton(btn) {
-      const src = btn.getAttribute('data-src');
-      const title = btn.getAttribute('data-title') || '';
-      const desc = btn.getAttribute('data-desc') || '';
+    <script>
+  // Cambia imagen + título + descripción y ajusta el "fit" (cover/contain)
+  function swapGrafanaFromButton(btn) {
+    const src   = btn.getAttribute('data-src');
+    const title = btn.getAttribute('data-title') || '';
+    const desc  = btn.getAttribute('data-desc') || '';
+    const fit   = btn.getAttribute('data-fit'); // "contain" opcional
 
-      const img = document.getElementById('grafana-main');
-      const titleEl = document.getElementById('grafana-title');
-      const descEl = document.getElementById('grafana-desc');
+    const img     = document.getElementById('grafana-main');
+    const titleEl = document.getElementById('grafana-title');
+    const descEl  = document.getElementById('grafana-desc');
 
-      if (img) img.src = src;
-      if (titleEl) titleEl.textContent = title;
-      if (descEl) descEl.textContent = desc;
+    if (img) {
+      img.src = src;
+      // reset fit por defecto
+      img.classList.remove('object-contain');
+      img.classList.add('object-cover');
+      // si la miniatura pide contain, se lo aplicamos
+      if (fit === 'contain') {
+        img.classList.remove('object-cover');
+        img.classList.add('object-contain');
+      }
     }
+    if (titleEl) titleEl.textContent = title;
+    if (descEl)  descEl.textContent  = desc;
+  }
+</script>
+
 
     // Contador de visitas (CountAPI con fallback localStorage)
     (function() {
