@@ -119,38 +119,33 @@
             <figure class="aspect-[4/3] w-full rounded-xl overflow-hidden border border-white/10 bg-bunker-800/50">
               <img id="grafana-main"
                    src="/images/Main-triple/dashboard2.png"  <!-- 👈 CAMBIA este path por tu imagen principal -->
-                   alt="Grafana — TPS durante la prueba"               <!-- 👈 CAMBIA este alt -->
-                   class="h-full w-full object-cover"
-                   loading="lazy" />
-            </figure>
+                                  <!-- 👈 CAMBIA este alt -->
+                   </figure>
 
             <!-- Miniaturas: al hacer clic cambian la imagen principal (ver función swapGrafana() al final) -->
             <div class="mt-3 grid grid-cols-3 gap-2">
               <!-- Thumb 1 -->
               <button class="group rounded-lg overflow-hidden border border-white/10"
-                      onclick="swapGrafana('/images/2025-08/loadtest-v1/02-during-tps.png','Grafana — TPS durante la prueba')">
+                      onclick="swapGrafana('/images/Main-triple/dashboard2.png','PostgreSQL monitoreado con Grafana y Prometheus para métricas de rendimiento y salud del sistema')">
                 <img src="/images/Main-triple/dashboard2.png"  <!-- 👈 CAMBIA path -->
-                     alt="Miniatura TPS"                                 <!-- 👈 CAMBIA alt -->
-                     class="h-20 w-full object-cover group-hover:opacity-90"
-                     loading="lazy" />
+                     "Monitoreo en Tiempo Real"                                 <!-- 👈 CAMBIA alt -->
+                     
               </button>
 
               <!-- Thumb 2 -->
               <button class="group rounded-lg overflow-hidden border border-white/10"
-                      onclick="swapGrafana('/images/2025-08/loadtest-v1/02a-latency.png','Grafana — Latencia p50/p95')">
-                <img src="/images/Main-triple/dashboard2.png"   <!-- 👈 CAMBIA path -->
-                     alt="Miniatura Latencia"                            <!-- 👈 CAMBIA alt -->
-                     class="h-20 w-full object-cover group-hover:opacity-90"
-                     loading="lazy" />
+                      onclick="swapGrafana('/images/Main-triple/diagrama.png','Estructura completa de la base de datos GreenhouseMarket, diseñada para análisis y rendimiento')">
+                <img src="/images/Main-triple/diagrama.png"   <!-- 👈 CAMBIA path -->
+                     "Modelo Relacional Optimizado"
+                  
               </button>
 
               <!-- Thumb 3 -->
               <button class="group rounded-lg overflow-hidden border border-white/10"
-                      onclick="swapGrafana('/images/2025-08/loadtest-v1/02b-locks.png','Grafana — Locks')">
-                <img src="/images/Main-triple/dashboard2.png"     <!-- 👈 CAMBIA path -->
-                     alt="Miniatura Locks"                               <!-- 👈 CAMBIA alt -->
-                     class="h-20 w-full object-cover group-hover:opacity-90"
-                     loading="lazy" />
+                      onclick="swapGrafana('/images/Main-triple/postgres.png','Aprovechando la base de datos open source más avanzada para administración, análisis y BI')">
+                <img src="/images/Main-triple/postgres.png"     <!-- 👈 CAMBIA path -->
+                     "Potenciado por PostgreSQL"
+                     
               </button>
             </div>
           </div>
