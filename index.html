@@ -332,33 +332,50 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Cambia imagen + título + descripción a partir de los data-* del botón
-    <script>
-  // Cambia imagen + título + descripción y ajusta el "fit" (cover/contain)
-  function swapGrafanaFromButton(btn) {
-    const src   = btn.getAttribute('data-src');
-    const title = btn.getAttribute('data-title') || '';
-    const desc  = btn.getAttribute('data-desc') || '';
-    const fit   = btn.getAttribute('data-fit'); // "contain" opcional
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const main   = document.getElementById('grafana-main');
+  const titleEl= document.getElementById('grafana-title');
+  const descEl = document.getElementById('grafana-desc');
 
-    const img     = document.getElementById('grafana-main');
-    const titleEl = document.getElementById('grafana-title');
-    const descEl  = document.getElementById('grafana-desc');
+  if (!main || !titleEl || !descEl) return;
 
-    if (img) {
-      img.src = src;
-      // reset fit por defecto
-      img.classList.remove('object-contain');
-      img.classList.add('object-cover');
-      // si la miniatura pide contain, se lo aplicamos
-      if (fit === 'contain') {
-        img.classList.remove('object-cover');
-        img.classList.add('object-contain');
-      }
-    }
-    if (titleEl) titleEl.textContent = title;
-    if (descEl)  descEl.textContent  = desc;
+  // estado visual de miniaturas activas (opcional)
+  const thumbs = Array.from(document.querySelectorAll('button[data-src]'));
+  function markActive(btn) {
+    thumbs.forEach(b => b.classList.remove('ring-2','ring-accent/60'));
+    btn.classList.add('ring-2','ring-accent/60');
   }
+
+  function setMainFrom(btn) {
+    const src   = btn.dataset.src;
+    const title = btn.dataset.title || '';
+    const desc  = btn.dataset.desc  || '';
+    const fit   = (btn.dataset.fit || 'cover').toLowerCase(); // 'cover' | 'contain'
+
+    // Cambiar imagen
+    main.src = src;
+    // Ajustar fit
+    main.classList.remove('object-cover','object-contain');
+    main.classList.add(fit === 'contain' ? 'object-contain' : 'object-cover');
+
+    // Actualizar leyenda
+    titleEl.textContent = title;
+    descEl.textContent  = desc;
+
+    markActive(btn);
+  }
+
+  // Conectar todas las miniaturas
+  thumbs.forEach(btn => {
+    btn.addEventListener('click', () => setMainFrom(btn));
+  });
+
+  // Marcar como activa la primera miniatura (si existe)
+  if (thumbs[0]) markActive(thumbs[0]);
+});
 </script>
+
 
 
     // Contador de visitas (CountAPI con fallback localStorage)
