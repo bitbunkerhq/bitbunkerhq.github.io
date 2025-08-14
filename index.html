@@ -194,10 +194,10 @@
       Elige una sección para ver los detalles:
     </p>
 
-    <!-- Grid de 3 cards sin estirar -->
-    <div class="mt-8 grid gap-6 md:grid-cols-3">
+    <!-- Grid de 3 cards sin estirar, todas copiaran la altura de la mas grande-->
+    <div class="mt-8 grid gap-6 md:grid-cols-3 items-stretch">
       <!-- Card 1 -->
-      <a href="/monitoring.html" class="block self-start rounded-2xl border border-white/10 bg-bunker-900/60 p-6 hover:bg-bunker-900 transition">
+      <a href="/monitoring.html" class="block h-full flex flex-col rounded-2xl border border-white/10 bg-bunker-900/60 p-6 hover:bg-bunker-900 transition">
         <div class="text-sm text-accent font-semibold">DBA · Monitoreo</div>
         <h3 class="mt-1 text-xl font-semibold">Prometheus + Grafana</h3>
         <p class="mt-2 text-white/80">Paneles con latencia, TPS/QPS, locks y estado de autovacuum. Incluye prueba controlada con pgbench.</p>
@@ -210,7 +210,7 @@
       </a>
 
       <!-- Card 2 -->
-      <a href="/indexing.html" class="block self-start rounded-2xl border border-white/10 bg-bunker-900/60 p-6 hover:bg-bunker-900 transition">
+      <a href="/indexing.html" class="block h-full flex flex-col rounded-2xl border border-white/10 bg-bunker-900/60 p-6 hover:bg-bunker-900 transition">
         <div class="text-sm text-accent font-semibold">Performance</div>
         <h3 class="mt-1 text-xl font-semibold">Indexación & Tuning</h3>
         <p class="mt-2 text-white/80">EXPLAIN ANALYZE, índices simples/compuestos y parciales, bitmap scans y casos reales.</p>
@@ -223,7 +223,7 @@
       </a>
 
       <!-- Card 3 -->
-      <a href="/bi.html" class="block self-start rounded-2xl border border-white/10 bg-bunker-900/60 p-6 hover:bg-bunker-900 transition">
+      <a href="/bi.html" class="block h-full flex flex-col rounded-2xl border border-white/10 bg-bunker-900/60 p-6 hover:bg-bunker-900 transition">
         <div class="text-sm text-accent font-semibold">Analítica</div>
         <h3 class="mt-1 text-xl font-semibold">BI · Dashboards & Analytics</h3>
         <p class="mt-2 text-white/80">KPIs de ventas, productos, márgenes y estacionalidad conectados a la base.</p>
